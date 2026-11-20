@@ -58,6 +58,7 @@ export default function NewsletterSection() {
         <div className="flex-1">
           <input
             id="newsletter-email"
+            autoComplete="email"
             type="email"
             placeholder="Tu correo electrónico"
             value={email}

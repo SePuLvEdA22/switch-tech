@@ -69,6 +69,7 @@ export default function ProfileForm() {
           </label>
           <input
             id="name"
+            autoComplete="name"
             type="text"
             value={name}
             onChange={(e) => {

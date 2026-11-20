@@ -62,6 +62,7 @@ export default function DeleteAccountSection() {
           </label>
           <input
             id="delete-password"
+            autoComplete="current-password"
             type="password"
             value={deletePassword}
             onChange={(e) => { setDeletePassword(e.target.value); setDeleteError(''); }}

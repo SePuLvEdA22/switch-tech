@@ -93,6 +93,7 @@ export default function ContactoPage() {
               </label>
               <input
                 id="name"
+                autoComplete="name"
                 name="name"
                 type="text"
                 className={`input-field ${errors.name ? 'border-error' : ''}`}
@@ -106,6 +107,7 @@ export default function ContactoPage() {
               </label>
               <input
                 id="email"
+                autoComplete="email"
                 name="email"
                 type="email"
                 className={`input-field ${errors.email ? 'border-error' : ''}`}

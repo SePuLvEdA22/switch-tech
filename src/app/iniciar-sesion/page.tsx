@@ -75,6 +75,7 @@ export default function IniciarSesionPage() {
             </label>
             <input
               id="email"
+              autoComplete="email"
               name="email"
               type="email"
               className={`input-field ${errors.email ? 'border-error' : ''}`}
@@ -88,6 +89,7 @@ export default function IniciarSesionPage() {
             </label>
             <input
               id="password"
+              autoComplete="current-password"
               name="password"
               type="password"
               className={`input-field ${errors.password ? 'border-error' : ''}`}

@@ -155,6 +155,7 @@ export default function RegistrarsePage() {
             </label>
             <input
               id="name"
+              autoComplete="name"
               name="name"
               type="text"
               className={`input-field ${errors.name ? 'border-error' : ''}`}
@@ -168,6 +169,7 @@ export default function RegistrarsePage() {
             </label>
             <input
               id="email"
+              autoComplete="email"
               name="email"
               type="email"
               className={`input-field ${errors.email ? 'border-error' : ''}`}
@@ -183,6 +185,7 @@ export default function RegistrarsePage() {
             </label>
             <input
               id="password"
+              autoComplete="new-password"
               name="password"
               type="password"
               value={password}
@@ -242,6 +245,7 @@ export default function RegistrarsePage() {
             </label>
             <input
               id="confirm"
+              autoComplete="new-password"
               name="confirm"
               type="password"
               value={confirm}

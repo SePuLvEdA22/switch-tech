@@ -96,6 +96,7 @@ export default function PasswordForm() {
           </label>
           <input
             id="current-password"
+            autoComplete="current-password"
             type="password"
             value={currentPassword}
             onChange={(e) => {
@@ -115,6 +116,7 @@ export default function PasswordForm() {
           </label>
           <input
             id="new-password"
+            autoComplete="new-password"
             type="password"
             value={newPassword}
             onChange={(e) => {
@@ -189,6 +191,7 @@ export default function PasswordForm() {
           </label>
           <input
             id="confirm-new-password"
+            autoComplete="new-password"
             type="password"
             value={confirmNewPassword}
             onChange={(e) => {
