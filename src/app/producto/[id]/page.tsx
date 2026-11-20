@@ -1,11 +1,11 @@
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
 import type { Category } from '@/lib/models';
 import { getProductById, getProductsByCategory } from '@/lib/products';
 
 export const dynamic = 'force-dynamic';
 import type { Product } from '@/types';
-import ProductImage from '@/components/ProductImage';
+import ProductGallery from '@/components/ProductGallery';
+import ProductCard from '@/components/ProductCard';
 import PriceTag from '@/components/PriceTag';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ProductJsonLd from '@/components/ProductJsonLd';
@@ -46,10 +46,9 @@ export default async function ProductDetailPage({ params }: Props) {
       ]} />
 
       <div className="grid gap-12 lg:grid-cols-2">
-        <ProductImage product={product} className="aspect-square rounded-2xl" />
+        <ProductGallery product={product} />
 
         <div className="flex flex-col justify-center">
-          <span className="chip mb-3">Nuevo</span>
           <h1 className="font-heading text-4xl font-medium text-on-surface md:text-5xl">
             {product.name}
           </h1>
@@ -73,17 +72,7 @@ export default async function ProductDetailPage({ params }: Props) {
           </h2>
           <div className="product-grid">
             {related.map((rel) => (
-              <Link
-                key={rel.id}
-                href={`/producto/${rel.id}`}
-                className="group"
-              >
-                <ProductImage product={rel} className="mb-3 aspect-square rounded-xl" />
-                <h3 className="font-body text-sm font-medium text-on-surface transition-colors group-hover:text-primary">
-                  {rel.name}
-                </h3>
-                <PriceTag product={rel} className="mt-1 font-body text-sm" />
-              </Link>
+              <ProductCard key={rel.id} product={rel} />
             ))}
           </div>
         </section>

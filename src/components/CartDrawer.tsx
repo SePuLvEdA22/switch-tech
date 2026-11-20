@@ -153,13 +153,14 @@ export default function CartDrawer() {
                   {formatPrice(totalPrice)}
                 </span>
               </div>
-              <Link
-                href="/carrito"
-                onClick={toggleCart}
-                className="btn-primary w-full"
-              >
-                Ver carrito
-              </Link>
+              <div className="flex flex-col gap-2">
+                <Link href="/checkout" onClick={toggleCart} className="btn-primary w-full">
+                  Pagar
+                </Link>
+                <Link href="/carrito" onClick={toggleCart} className="btn-secondary w-full">
+                  Ver carrito
+                </Link>
+              </div>
             </div>
           </>
         )}

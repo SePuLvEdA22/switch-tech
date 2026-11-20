@@ -81,10 +81,11 @@ export default function Header() {
             texto accesible son correctos desde el primer pintado, sin esperar
             a la hidratación (display:none también los saca del árbol de AT).
           */}
+          {/* En móvil el toggle vive dentro del menú: la barra ya tenía 5 íconos. */}
           <button
             type="button"
             onClick={toggleTheme}
-            className="p-2 transition-colors hover:text-primary"
+            className="hidden p-2 transition-colors hover:text-primary md:block"
           >
             <span className="if-dark">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -175,7 +176,9 @@ export default function Header() {
       <div
         ref={menuRef}
         className={`overflow-hidden transition-all duration-300 ease-in-out md:hidden ${
-          mobileOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
+          // Altura máxima = viewport bajo el header (antes 320px fijos cortaban
+          // el menú con sesión iniciada); si no cabe, scroll interno.
+          mobileOpen ? 'max-h-[calc(100dvh-4rem)] overflow-y-auto opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
         <nav className="border-t border-outline-variant/50 bg-surface px-6 py-4" aria-label="Navegación móvil">
@@ -243,6 +246,34 @@ export default function Header() {
                 </Link>
               </li>
             )}
+            <li className="mt-1 border-t border-outline-variant/50 pt-2">
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="flex w-full items-center gap-3 rounded-md px-4 py-3 font-body text-sm text-on-surface-variant transition-colors hover:bg-surface-container"
+              >
+                <span className="if-dark flex items-center gap-3">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="5" />
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                  </svg>
+                  Activar modo claro
+                </span>
+                <span className="if-light flex items-center gap-3">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                  </svg>
+                  Activar modo oscuro
+                </span>
+              </button>
+            </li>
           </ul>
         </nav>
       </div>

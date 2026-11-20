@@ -33,17 +33,19 @@ export default function CategorySection() {
       <h2 className="mb-8 font-heading text-3xl font-medium text-on-surface md:text-4xl">
         Categorías
       </h2>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 animate-stagger">
+      {/* 2 columnas desde móvil: antes eran 4 bloques a todo el ancho que
+          ocupaban pantalla y media antes del primer producto. */}
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 animate-stagger">
         {categories.map((cat) => (
           <Link
             key={cat.href}
             href={cat.href}
-            className={`group relative flex h-48 flex-col justify-end overflow-hidden rounded-xl bg-gradient-to-br p-6 transition-shadow duration-300 hover:shadow-medium ${cat.gradient}`}
+            className={`group relative flex h-32 flex-col justify-end overflow-hidden rounded-xl bg-gradient-to-br p-4 transition-shadow duration-300 hover:shadow-medium sm:h-48 sm:p-6 ${cat.gradient}`}
           >
-            <h3 className="font-heading text-2xl font-medium text-on-surface transition-colors group-hover:text-primary">
+            <h3 className="font-heading text-xl font-medium text-on-surface transition-colors group-hover:text-primary sm:text-2xl">
               {cat.title}
             </h3>
-            <p className="mt-1 font-body text-sm text-on-surface-variant">
+            <p className="mt-1 font-body text-xs text-on-surface-variant sm:text-sm">
               {cat.description}
             </p>
           </Link>

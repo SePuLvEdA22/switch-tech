@@ -79,10 +79,16 @@ export default function ProductCard({ product }: ProductCardProps) {
         </button>
       </div>
 
-      <h3 className="font-heading text-base font-medium text-on-surface transition-colors group-hover:text-primary">
+      {/* Nombre en la sans del cuerpo (Playfair a 16px se veía débil) y el
+          precio con más peso: es lo que el comprador compara en la grilla. */}
+      <h3 className="font-body text-sm font-medium leading-snug text-on-surface transition-colors group-hover:text-primary sm:text-base">
         <Link href={href}>{product.name}</Link>
       </h3>
-      <PriceTag product={product} />
+      <PriceTag
+        product={product}
+        className="mt-1 font-body text-sm sm:text-base"
+        priceClassName="font-semibold text-on-surface"
+      />
     </article>
   );
 }

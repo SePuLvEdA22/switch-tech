@@ -85,26 +85,28 @@ export default function Footer() {
             <h3 className="mb-4 font-body text-xs font-medium uppercase tracking-[0.15em] text-on-surface-variant">
               Síguenos
             </h3>
-            <div className="flex gap-3">
+            {/* Enlaces de texto, igual que las otras columnas: antes eran
+                círculos con la inicial (I, F, T, P), que parecían placeholders. */}
+            <ul className="flex flex-col gap-2">
               {[
-
                 { name: 'Instagram', url: 'https://instagram.com/switchandtech' },
                 { name: 'Facebook', url: 'https://facebook.com/switchandtech' },
                 { name: 'TikTok', url: 'https://tiktok.com/@switchandtech' },
                 { name: 'Pinterest', url: 'https://pinterest.com/switchandtech' },
               ].map((social) => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant text-xs text-on-surface-variant transition-colors hover:border-primary hover:text-primary"
-                  aria-label={social.name}
-                >
-                  {social.name[0]}
-                </a>
+                <li key={social.name}>
+                  <a
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-body text-sm text-on-surface-variant transition-colors hover:text-primary"
+                  >
+                    {social.name}
+                    <span className="sr-only"> (se abre en una pestaña nueva)</span>
+                  </a>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
 
