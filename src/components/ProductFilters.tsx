@@ -3,7 +3,8 @@
 import { useState, useMemo } from 'react';
 import { type Product } from '@/types';
 import ProductCard from './ProductCard';
-import CustomSelect from './CustomSelect';
+
+type SortKey = 'default' | 'price-asc' | 'price-desc' | 'name';
 
 interface ProductFiltersProps {
   products: Product[];
@@ -11,7 +12,7 @@ interface ProductFiltersProps {
 }
 
 export default function ProductFilters({ products, title }: ProductFiltersProps) {
-  const [sortBy, setSortBy] = useState<'default' | 'price-asc' | 'price-desc' | 'name'>('default');
+  const [sortBy, setSortBy] = useState<SortKey>('default');
 
   const sorted = useMemo(() => {
     const list = [...products];
@@ -53,17 +54,22 @@ export default function ProductFilters({ products, title }: ProductFiltersProps)
           </h2>
         )}
         <div className="flex items-center gap-3">
-          <CustomSelect
-            label="Ordenar por"
+          {/* <select> nativo: teclado, lectores de pantalla y picker móvil gratis. */}
+          <label htmlFor="sort-products" className="sr-only">
+            Ordenar por
+          </label>
+          <select
+            id="sort-products"
+            name="sort"
             value={sortBy}
-            onChange={(v) => setSortBy(v as typeof sortBy)}
-            options={[
-              { value: 'default', label: 'Ordenar por' },
-              { value: 'price-asc', label: 'Precio: menor a mayor' },
-              { value: 'price-desc', label: 'Precio: mayor a menor' },
-              { value: 'name', label: 'Nombre: A-Z' },
-            ]}
-          />
+            onChange={(e) => setSortBy(e.target.value as SortKey)}
+            className="input-field w-auto py-2 pl-3"
+          >
+            <option value="default">Relevancia</option>
+            <option value="price-asc">Precio: menor a mayor</option>
+            <option value="price-desc">Precio: mayor a menor</option>
+            <option value="name">Nombre: A-Z</option>
+          </select>
           <span className="font-body text-sm text-on-surface-variant">
             {products.length} producto{products.length !== 1 ? 's' : ''}
           </span>

@@ -18,7 +18,8 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
   const [added, setAdded] = useState(false);
 
   const handleAddToCart = () => {
-    addItem(product, quantity, selectedColor);
+    // Sin elección explícita se usa el primer color, que es el que se muestra marcado.
+    addItem(product, quantity, selectedColor || product.colors?.[0]);
     addToast(`${product.name} agregado al carrito`, 'success');
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
@@ -27,31 +28,37 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
   return (
     <>
       {product.colors && product.colors.length > 0 && (
-        <div className="mt-8">
-          <p className="mb-3 font-body text-xs font-medium uppercase tracking-wider text-on-surface-variant">
+        // Elegir un color es una opción única: grupo de radios nativos con
+        // aspecto de botón (antes eran botones sin estado accesible).
+        <fieldset className="mt-8">
+          <legend className="mb-3 font-body text-xs font-medium uppercase tracking-wider text-on-surface-variant">
             Color: <span className="text-on-surface">{selectedColor || product.colors[0]}</span>
-          </p>
+          </legend>
           <div className="flex flex-wrap gap-2">
             {product.colors.map((color) => (
-              <button
+              <label
                 key={color}
-                onClick={() => setSelectedColor(color)}
-                className={`rounded-lg border px-4 py-2 font-body text-sm transition-all ${
-                  selectedColor === color || (!selectedColor && color === product.colors![0])
-                    ? 'border-primary bg-primary text-on-primary'
-                    : 'border-outline-variant text-on-surface-variant hover:border-primary'
-                }`}
+                className="cursor-pointer rounded-lg border border-outline-variant px-4 py-2 font-body text-sm text-on-surface-variant transition-all hover:border-primary has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary"
               >
+                <input
+                  type="radio"
+                  name={`color-${product.id}`}
+                  value={color}
+                  checked={(selectedColor || product.colors![0]) === color}
+                  onChange={() => setSelectedColor(color)}
+                  className="sr-only"
+                />
                 {color}
-              </button>
+              </label>
             ))}
           </div>
-        </div>
+        </fieldset>
       )}
 
       <div className="mt-8 flex items-center gap-4">
         <div className="flex items-center rounded-lg border border-outline-variant">
           <button
+            type="button"
             onClick={() => setQuantity(Math.max(1, quantity - 1))}
             className="flex h-12 w-12 items-center justify-center text-lg transition-colors hover:bg-surface-container"
             aria-label="Reducir cantidad"
@@ -62,6 +69,7 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
             {quantity}
           </span>
           <button
+            type="button"
             onClick={() => setQuantity(quantity + 1)}
             className="flex h-12 w-12 items-center justify-center text-lg transition-all duration-150 active:scale-90 hover:bg-surface-container"
             aria-label="Aumentar cantidad"

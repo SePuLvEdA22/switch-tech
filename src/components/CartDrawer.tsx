@@ -1,54 +1,58 @@
 'use client';
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, type MouseEvent } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { formatPrice } from '@/lib/format-price';
 import ProductImage from './ProductImage';
 import PriceTag from './PriceTag';
 
+/** `closedby` aún no está en los tipos de React; se pasa como atributo. */
+const LIGHT_DISMISS = { closedby: 'any' } as Record<string, string>;
+
+/**
+ * Drawer del carrito como <dialog> modal nativo (showModal):
+ * el navegador hace página inerte, foco contenido, Esc, gesto "atrás" y
+ * devuelve el foco al botón que lo abrió. Sin focus trap ni overflow:hidden
+ * en <body> hechos a mano. Estilos y animación en `.cart-drawer` (globals.css).
+ */
 export default function CartDrawer() {
   const { items, isOpen, toggleCart, removeItem, updateQuantity, totalPrice } = useCart();
-  const drawerRef = useRef<HTMLDivElement>(null);
-  const previousActiveElement = useRef<HTMLElement | null>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const handleEscape = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Escape' && isOpen) toggleCart();
-  }, [isOpen, toggleCart]);
-
+  // El estado del contexto manda; el <dialog> se sincroniza con él.
   useEffect(() => {
-    if (isOpen) {
-      previousActiveElement.current = document.activeElement as HTMLElement;
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => drawerRef.current?.focus(), 50);
-    } else {
-      document.body.style.overflow = '';
-      previousActiveElement.current?.focus();
-    }
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = '';
-    };
-  }, [isOpen, handleEscape]);
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (isOpen && !dialog.open) dialog.showModal();
+    else if (!isOpen && dialog.open) dialog.close();
+  }, [isOpen]);
 
-  if (!isOpen) return null;
+  // Si el navegador lo cerró (Esc, clic fuera), reflejarlo en el contexto.
+  const handleClose = () => {
+    if (isOpen) toggleCart();
+  };
+
+  // Fallback de light dismiss para navegadores sin `closedby` (Safari):
+  // se compara la posición del puntero, no el target (el padding del
+  // <dialog> también tiene como target al propio dialog).
+  const handleBackdropClick = (e: MouseEvent<HTMLDialogElement>) => {
+    if ('closedBy' in HTMLDialogElement.prototype) return;
+    if (e.target !== e.currentTarget) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    if (!inside) e.currentTarget.close();
+  };
 
   return (
-    <>
-      <div
-        className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm transition-opacity duration-300"
-        onClick={toggleCart}
-        aria-hidden="true"
-      />
-      <div
-        ref={drawerRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="cart-drawer-title"
-        tabIndex={-1}
-        className="fixed right-0 top-0 z-50 flex h-full w-full max-w-md flex-col bg-surface shadow-medium translate-x-0 transition-transform duration-300 ease-out"
-      >
+    <dialog
+      ref={dialogRef}
+      {...LIGHT_DISMISS}
+      aria-labelledby="cart-drawer-title"
+      className="cart-drawer"
+      onClose={handleClose}
+      onClick={handleBackdropClick}
+    >
         <div className="flex items-center justify-between border-b border-outline-variant px-6 py-4">
           <h2 id="cart-drawer-title" className="font-heading text-xl font-medium">Carrito</h2>
           <button
@@ -159,7 +163,6 @@ export default function CartDrawer() {
             </div>
           </>
         )}
-      </div>
-    </>
+    </dialog>
   );
 }

@@ -17,6 +17,10 @@ const ToastContext = createContext<ToastContextValue | null>(null);
 
 const TOAST_DURATION = 3500;
 
+type AriaNotifyDocument = Document & {
+  ariaNotify?: (message: string, options?: { priority?: 'normal' | 'high' }) => void;
+};
+
 export function useToast() {
   const ctx = useContext(ToastContext);
   if (!ctx) throw new Error('useToast must be used within ToastProvider');
@@ -27,6 +31,30 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
   const timersRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
   const hoveredIdRef = useRef<string | null>(null);
+  const recentRef = useRef<Map<string, number>>(new Map());
+  const politeRef = useRef<HTMLDivElement>(null);
+  const assertiveRef = useRef<HTMLDivElement>(null);
+
+  /**
+   * Anuncia el mensaje UNA vez. Los toasts visibles no son live regions
+   * (antes cada uno era role="alert" dentro de un aria-live: doble anuncio).
+   * Errores con prioridad alta; éxito/info sin interrumpir.
+   */
+  const announce = useCallback((message: string, type: Toast['type']) => {
+    const doc = document as AriaNotifyDocument;
+    if (typeof doc.ariaNotify === 'function') {
+      doc.ariaNotify(message, { priority: type === 'error' ? 'high' : 'normal' });
+      return;
+    }
+    // Fallback: live regions presentes desde la carga. Se vacían y se
+    // rellenan para que un mensaje repetido se vuelva a anunciar.
+    const region = type === 'error' ? assertiveRef.current : politeRef.current;
+    if (!region) return;
+    region.textContent = '';
+    setTimeout(() => {
+      region.textContent = message;
+    }, 50);
+  }, []);
 
   const clearTimer = useCallback((id: string) => {
     const timer = timersRef.current.get(id);
@@ -46,17 +74,22 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   }, [clearTimer]);
 
   const addToast = useCallback((message: string, type: Toast['type'] = 'success') => {
-    const id = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-    const toast: Toast = { id, message, type, createdAt: Date.now() };
-    setToasts((prev) => {
-      const exists = prev.some(
-        (t) => t.message === message && t.type === type && Date.now() - t.createdAt < 2000
-      );
-      if (exists) return prev;
-      return [...prev, toast];
-    });
+    // Deduplicación fuera del updater de setState (debe ser puro: en
+    // StrictMode se ejecuta dos veces y anunciaría dos veces).
+    const now = Date.now();
+    const dedupeKey = `${type}:${message}`;
+    const last = recentRef.current.get(dedupeKey);
+    if (last !== undefined && now - last < 2000) return;
+    for (const [key, at] of recentRef.current) {
+      if (now - at >= 2000) recentRef.current.delete(key);
+    }
+    recentRef.current.set(dedupeKey, now);
+
+    const id = `${now}-${Math.random().toString(36).slice(2, 7)}`;
+    setToasts((prev) => [...prev, { id, message, type, createdAt: now }]);
     startTimer(id);
-  }, [startTimer]);
+    announce(message, type);
+  }, [startTimer, announce]);
 
   const removeToast = useCallback((id: string) => {
     clearTimer(id);
@@ -78,16 +111,20 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={{ addToast }}>
       {children}
+      {/* Fallback de anuncios para navegadores sin ariaNotify(). */}
+      <div className="sr-only">
+        <p>Anuncios para lectores de pantalla</p>
+        <div ref={politeRef} aria-live="polite" />
+        <div ref={assertiveRef} aria-live="assertive" />
+      </div>
       <div
         className="fixed top-20 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-3 w-full max-w-sm px-4 pointer-events-none"
-        aria-live="polite"
+        role="region"
         aria-label="Notificaciones"
-        role="log"
       >
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            role="alert"
             className={`flex items-start gap-3 rounded-xl px-5 py-3.5 font-body text-sm shadow-medium w-full pointer-events-auto animate-toast-slide ${
               toast.type === 'success'
                 ? 'bg-primary text-on-primary shadow-lg shadow-primary/20'
@@ -97,6 +134,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             }`}
             onMouseEnter={() => handleMouseEnter(toast.id)}
             onMouseLeave={() => handleMouseLeave(toast.id)}
+            // Pausar también mientras el foco está en el toast (botón cerrar).
+            onFocus={() => handleMouseEnter(toast.id)}
+            onBlur={() => handleMouseLeave(toast.id)}
           >
             <span className="mt-0.5 flex-shrink-0">
               {toast.type === 'success' && (
@@ -121,6 +161,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             </span>
             <span className="flex-1 leading-snug">{toast.message}</span>
             <button
+              type="button"
               onClick={() => removeToast(toast.id)}
               className="flex-shrink-0 mt-0.5 opacity-70 transition-all hover:opacity-100 hover:scale-110 active:scale-90"
               aria-label="Cerrar notificación"

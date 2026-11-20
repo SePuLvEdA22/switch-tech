@@ -48,41 +48,35 @@ export default function PaymentStep({
         Método de pago
       </h2>
 
-      {/* Selector de método de pago */}
-      <div className="flex flex-col gap-3">
+      {/* Selector de método de pago: radios nativos (flechas, Tab y lector de
+          pantalla funcionan solos). La tarjeta completa es el <label>. */}
+      <fieldset className="flex flex-col gap-3">
+        <legend className="sr-only">Elige un método de pago</legend>
         {PAYMENT_METHODS.map((method) => (
-          <button
+          <label
             key={method.value}
-            type="button"
-            onClick={() => onPaymentMethodChange(method.value)}
-            className={`flex items-start gap-4 rounded-xl border p-5 text-left transition-all ${
-              paymentMethod === method.value
-                ? 'border-primary bg-primary-container/20'
-                : 'border-outline-variant bg-surface-container-low hover:border-primary/50'
-            }`}
+            className="flex cursor-pointer items-start gap-4 rounded-xl border border-outline-variant bg-surface-container-low p-5 transition-all hover:border-primary/50 has-[:checked]:border-primary has-[:checked]:bg-primary-container/20 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary"
           >
-            <div
-              className={`mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border-2 ${
-                paymentMethod === method.value
-                  ? 'border-primary'
-                  : 'border-outline'
-              }`}
-            >
-              {paymentMethod === method.value && (
-                <div className="h-3 w-3 rounded-full bg-primary" />
-              )}
-            </div>
-            <div>
-              <p className="font-body text-sm font-medium text-on-surface">
+            <input
+              type="radio"
+              name="payment-method"
+              value={method.value}
+              checked={paymentMethod === method.value}
+              onChange={() => onPaymentMethodChange(method.value)}
+              aria-describedby={`pm-desc-${method.value}`}
+              className="mt-0.5 h-5 w-5 flex-shrink-0 accent-primary focus-visible:outline-none"
+            />
+            <span>
+              <span className="block font-body text-sm font-medium text-on-surface">
                 {method.label}
-              </p>
-              <p className="mt-0.5 font-body text-sm text-on-surface-variant">
+              </span>
+              <span id={`pm-desc-${method.value}`} className="mt-0.5 block font-body text-sm text-on-surface-variant">
                 {method.description}
-              </p>
-            </div>
-          </button>
+              </span>
+            </span>
+          </label>
         ))}
-      </div>
+      </fieldset>
 
       {/* Test mode notice */}
       {isTestMode && (

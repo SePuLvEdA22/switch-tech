@@ -44,6 +44,9 @@ export default function CheckoutPage() {
   if (!hydrated) {
     return (
       <div className="container-store py-12">
+        <h1 className="mb-6 font-heading text-4xl font-medium text-on-surface md:text-5xl">
+          Finalizar compra
+        </h1>
         <CheckoutStepper step={step} />
         <CartSkeleton rows={1} />
       </div>
@@ -181,6 +184,9 @@ export default function CheckoutPage() {
 
   return (
     <div className="container-store py-12 animate-fade-in">
+      <h1 className="mb-6 font-heading text-4xl font-medium text-on-surface md:text-5xl">
+        Finalizar compra
+      </h1>
       <CheckoutStepper step={step} />
 
       <div className="grid gap-12 lg:grid-cols-5">
@@ -193,7 +199,9 @@ export default function CheckoutPage() {
               onErrorsChange={setErrors}
               onSubmit={() => {
                 setStep('payment');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Sin behavior explícito: usa el scroll-behavior del CSS, que
+                // solo es suave si no se pidió reducir el movimiento.
+                window.scrollTo({ top: 0 });
               }}
             />
           )}
