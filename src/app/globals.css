@@ -228,6 +228,46 @@
   .animate-stagger > *:nth-child(7) { animation-delay: 0.35s; }
   .animate-stagger > *:nth-child(8) { animation-delay: 0.4s; }
 
+  /*
+   * Grilla de productos: columnas fijas por breakpoint con minmax(0, 1fr)
+   * (las tarjetas pueden encogerse; un nombre largo no desborda la columna).
+   * 2 columnas incluso a 320px, a diferencia del flex + min-width anterior.
+   */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 16px;
+    row-gap: 40px;
+  }
+
+  @media (min-width: 640px) {
+    .product-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .product-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  /*
+   * Acciones flotantes de la tarjeta (agregar, favorito). Solo se ocultan
+   * hasta el hover en dispositivos con puntero fino que SÍ pueden hacer hover;
+   * en táctiles siempre están visibles. Con teclado aparecen al enfocar.
+   */
+  @media (hover: hover) and (pointer: fine) {
+    .card-action {
+      opacity: 0;
+    }
+
+    .group:is(:hover, :focus-within) .card-action,
+    .card-action[aria-pressed="true"] {
+      opacity: 1;
+    }
+  }
+
   .btn-primary {
     display: inline-flex;
     align-items: center;

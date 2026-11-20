@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useToast } from '@/context/ToastContext';
 import type { Product } from '@/lib/models';
+import WishlistButton from './WishlistButton';
 
 /**
  * Isla de cliente de la página de producto: selector de color, cantidad y
@@ -85,6 +86,12 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
             'Agregar al carrito'
           )}
         </button>
+        <WishlistButton
+          productId={product.id}
+          productName={product.name}
+          size={22}
+          className="h-12 w-12 flex-shrink-0 border border-outline-variant hover:border-error"
+        />
       </div>
     </>
   );

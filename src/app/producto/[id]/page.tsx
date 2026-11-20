@@ -71,12 +71,12 @@ export default async function ProductDetailPage({ params }: Props) {
           <h2 className="mb-8 font-heading text-2xl font-medium text-on-surface">
             Productos relacionados
           </h2>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="product-grid">
             {related.map((rel) => (
               <Link
                 key={rel.id}
                 href={`/producto/${rel.id}`}
-                className="group w-[calc(50%-8px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)] min-w-[160px]"
+                className="group"
               >
                 <ProductImage product={rel} className="mb-3 aspect-square rounded-xl" />
                 <h3 className="font-body text-sm font-medium text-on-surface transition-colors group-hover:text-primary">

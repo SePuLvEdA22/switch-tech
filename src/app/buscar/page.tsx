@@ -116,9 +116,9 @@ export default function BuscarPage() {
       </div>
 
       {loading && (
-        <div className="flex flex-wrap justify-center gap-x-4 gap-y-10">
+        <div className="product-grid">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="w-[calc(50%-8px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)] min-w-[180px]">
+            <div key={i}>
               <div className="mb-3 aspect-square rounded-xl bg-surface-container-high animate-pulse" />
               <div className="h-5 w-3/4 rounded bg-surface-container-high animate-pulse" />
               <div className="mt-2 h-4 w-1/4 rounded bg-surface-container-high animate-pulse" />
@@ -154,9 +154,9 @@ export default function BuscarPage() {
             {pagination?.total ?? results.length} resultado{(pagination?.total ?? results.length) !== 1 ? 's' : ''} para &quot;{query}&quot;
             {pagination && pagination.totalPages > 1 && ` (página ${pagination.page} de ${pagination.totalPages})`}
           </p>
-          <div className="flex flex-wrap justify-center gap-x-4 gap-y-10 animate-stagger">
+          <div className="product-grid animate-stagger">
             {results.map((product) => (
-              <div key={product.id} className="w-[calc(50%-8px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)] min-w-[180px]">
+              <div key={product.id}>
                 <Link href={`/producto/${product.id}`} className="group flex flex-col">
                   <ProductImage product={product} className="mb-3 aspect-square rounded-xl" />
                   <h3 className="font-heading text-base font-medium text-on-surface transition-colors group-hover:text-primary">

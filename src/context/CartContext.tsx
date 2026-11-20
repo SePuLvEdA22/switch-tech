@@ -15,6 +15,12 @@ import { getPrice } from "@/lib/format-price";
 interface CartState {
   items: CartItem[];
   isOpen: boolean;
+  /**
+   * false hasta leer localStorage. En SSR y en el primer render del cliente
+   * el carrito está vacío "por desconocido", no porque lo esté: la UI debe
+   * mostrar un skeleton en vez de "Tu carrito está vacío".
+   */
+  hydrated: boolean;
 }
 
 type CartAction =
@@ -31,6 +37,8 @@ type CartAction =
 interface CartContextType {
   items: CartItem[];
   isOpen: boolean;
+  /** true cuando ya se restauró el carrito desde localStorage. */
+  hydrated: boolean;
   addItem: (product: Product, quantity?: number, selectedColor?: string) => void;
   removeItem: (productId: string, selectedColor?: string) => void;
   updateQuantity: (productId: string, quantity: number, selectedColor?: string) => void;
@@ -98,16 +106,21 @@ export function cartReducer(state: CartState, action: CartAction): CartState {
     case "TOGGLE_CART":
       return { ...state, isOpen: !state.isOpen };
     case "HYDRATE":
-      return { ...state, items: action.payload };
+      return { ...state, items: action.payload, hydrated: true };
     default:
       return state;
   }
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(cartReducer, { items: [], isOpen: false });
+  const [state, dispatch] = useReducer(cartReducer, {
+    items: [],
+    isOpen: false,
+    hydrated: false,
+  });
 
   useEffect(() => {
+    let restored: CartItem[] = [];
     try {
       const stored = localStorage.getItem("switch-tech-cart");
       if (stored) {
@@ -133,7 +146,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
             return true;
           });
           // Si había datos corruptos, persistir solo los válidos en próximo efecto; si todo válido, hidratar
-          if (valid.length > 0) dispatch({ type: "HYDRATE", payload: valid });
+          if (valid.length > 0) restored = valid;
           else if (parsed.length > 0) {
             // carrito completamente corrupto: limpiar para no romper totalPrice
             localStorage.removeItem("switch-tech-cart");
@@ -141,6 +154,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
       }
     } catch {}
+    // Siempre se marca como hidratado, haya o no carrito guardado.
+    dispatch({ type: "HYDRATE", payload: restored });
   }, []);
 
   useEffect(() => {
@@ -150,10 +165,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
+    // No persistir antes de restaurar: se escribiría [] sobre el carrito guardado.
+    if (!state.hydrated) return;
     try {
       localStorage.setItem("switch-tech-cart", JSON.stringify(state.items));
     } catch {}
-  }, [state.items]);
+  }, [state.items, state.hydrated]);
 
   const addItem = useCallback((product: Product, quantity = 1, selectedColor?: string) => {
     dispatch({ type: "ADD_ITEM", payload: { product, quantity, selectedColor } });
@@ -192,6 +209,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       value={{
         items: state.items,
         isOpen: state.isOpen,
+        hydrated: state.hydrated,
         addItem,
         removeItem,
         updateQuantity,

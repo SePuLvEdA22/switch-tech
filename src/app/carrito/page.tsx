@@ -5,9 +5,19 @@ import { formatPrice } from '@/lib/format-price';
 import Link from 'next/link';
 import ProductImage from '@/components/ProductImage';
 import PriceTag from '@/components/PriceTag';
+import CartSkeleton from '@/components/CartSkeleton';
 
 export default function CarritoPage() {
-  const { items, removeItem, updateQuantity, totalPrice, clearCart } = useCart();
+  const { items, hydrated, removeItem, updateQuantity, totalPrice, clearCart } = useCart();
+
+  if (!hydrated) {
+    return (
+      <div className="container-store py-12">
+        <h1 className="mb-8 font-heading text-4xl font-medium text-on-surface md:text-5xl">Carrito</h1>
+        <CartSkeleton />
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (

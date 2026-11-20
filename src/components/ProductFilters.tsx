@@ -69,9 +69,9 @@ export default function ProductFilters({ products, title }: ProductFiltersProps)
           </span>
         </div>
       </div>
-      <div className="flex flex-wrap justify-center gap-x-4 gap-y-10 animate-stagger">
+      <div className="product-grid animate-stagger">
         {sorted.map((product) => (
-          <div key={product.id} className="w-[calc(50%-8px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)] min-w-[180px]">
+          <div key={product.id}>
             <ProductCard product={product} />
           </div>
         ))}

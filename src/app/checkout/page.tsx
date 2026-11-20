@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { getPrice } from '@/lib/format-price';
 import CheckoutStepper from './_components/CheckoutStepper';
+import CartSkeleton from '@/components/CartSkeleton';
 import ShippingStep, { EMPTY_SHIPPING, type ShippingForm } from './_components/ShippingStep';
 import PaymentStep from './_components/PaymentStep';
 import OrderSummary, { type AppliedCoupon } from './_components/OrderSummary';
@@ -15,7 +16,7 @@ type Step = 'shipping' | 'payment' | 'confirm';
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, totalPrice, clearCart } = useCart();
+  const { items, hydrated, totalPrice, clearCart } = useCart();
   const [step, setStep] = useState<Step>('shipping');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -37,6 +38,17 @@ export default function CheckoutPage() {
   const [couponLoading, setCouponLoading] = useState(false);
 
   const discountedTotal = Math.max(0, totalPrice - (coupon?.discount ?? 0));
+
+  // Mientras se restaura el carrito no se sabe si está vacío: evita el flash
+  // de "Carrito vacío" al entrar directo a /checkout o al recargar.
+  if (!hydrated) {
+    return (
+      <div className="container-store py-12">
+        <CheckoutStepper step={step} />
+        <CartSkeleton rows={1} />
+      </div>
+    );
+  }
 
   if (items.length === 0 && step !== 'confirm') {
     return (

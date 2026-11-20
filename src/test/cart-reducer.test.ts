@@ -28,7 +28,7 @@ const CARGADOR: Product = {
 } as unknown as Product;
 
 type State = Parameters<typeof cartReducer>[0];
-const initial: State = { items: [], isOpen: false };
+const initial: State = { items: [], isOpen: false, hydrated: false };
 
 describe('cartReducer — ADD_ITEM', () => {
   it('agrega_un_producto_nuevo', () => {
@@ -128,5 +128,12 @@ describe('cartReducer — CLEAR / TOGGLE / HYDRATE', () => {
     const state = cartReducer(initial, { type: 'HYDRATE', payload: items as never });
     expect(state.items).toHaveLength(1);
     expect(state.items[0].product.id).toBe('cargador-1');
+  });
+
+  it('HYDRATE_marca_el_carrito_como_hidratado_aunque_venga_vacío', () => {
+    expect(initial.hydrated).toBe(false);
+    const state = cartReducer(initial, { type: 'HYDRATE', payload: [] });
+    expect(state.hydrated).toBe(true);
+    expect(state.items).toHaveLength(0);
   });
 });
