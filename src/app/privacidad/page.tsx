@@ -139,7 +139,7 @@ export default function PrivacidadPage() {
           </ul>
           <p className="mt-3">
             Para ejercer tus derechos, escríbenos a{' '}
-            <span className="text-primary">privacidad@switchandtech.mx</span>.
+            <span className="text-primary">privacidad@switchandtech.com</span>.
           </p>
         </section>
 
@@ -166,7 +166,7 @@ export default function PrivacidadPage() {
             <p className="text-on-surface">
               <strong>Switch&Tech</strong>
             </p>
-            <p>Email: privacidad@switchandtech.mx</p>
+            <p>Email: privacidad@switchandtech.com</p>
             <p>Teléfono: +57 300 123 4567</p>
             <p>Bogotá, Colombia</p>
           </div>

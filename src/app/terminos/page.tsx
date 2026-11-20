@@ -153,7 +153,7 @@ export default function TerminosPage() {
             <p className="text-on-surface">
               <strong>Switch&Tech</strong>
             </p>
-            <p>Email: legal@switchandtech.mx</p>
+            <p>Email: legal@switchandtech.com</p>
             <p>Teléfono: +57 300 123 4567</p>
           </div>
         </section>

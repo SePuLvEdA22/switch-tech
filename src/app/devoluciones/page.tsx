@@ -31,7 +31,7 @@ export default function DevolucionesPage() {
         <section>
           <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">Proceso de devolución</h2>
           <ol className="mt-3 flex flex-col gap-2 pl-5 list-decimal">
-            <li>Envíanos un correo a <span className="text-primary">devoluciones@switchandtech.mx</span> con tu número de pedido</li>
+            <li>Envíanos un correo a <span className="text-primary">devoluciones@switchandtech.com</span> con tu número de pedido</li>
             <li>Te enviaremos una guía de devolución prepagada</li>
             <li>Empaca el producto de forma segura y entrega el paquete en la paquetería indicada</li>
             <li>Una vez recibido e inspeccionado, procesaremos tu reembolso (3–5 días hábiles)</li>
