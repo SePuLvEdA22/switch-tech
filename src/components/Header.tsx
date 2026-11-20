@@ -24,7 +24,7 @@ export default function Header() {
   const menuRef = useRef<HTMLDivElement>(null);
   const { user, logout } = useAuth();
   const { wishlist } = useWishlist();
-  const { theme, toggleTheme } = useTheme();
+  const { toggleTheme } = useTheme();
 
   // Ajuste de estado durante el render (patrón recomendado): al cambiar de ruta,
   // cierra el menú móvil sin setState síncrono dentro de un effect.
@@ -75,12 +75,18 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          {/*
+            Ambos estados están en el HTML y globals.css oculta el inactivo
+            (.if-dark / .if-light) según el esquema real. Así el ícono y el
+            texto accesible son correctos desde el primer pintado, sin esperar
+            a la hidratación (display:none también los saca del árbol de AT).
+          */}
           <button
+            type="button"
             onClick={toggleTheme}
             className="p-2 transition-colors hover:text-primary"
-            aria-label={theme === 'dark' ? 'Modo claro' : 'Modo oscuro'}
           >
-            {theme === 'dark' ? (
+            <span className="if-dark">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <circle cx="12" cy="12" r="5" />
                 <line x1="12" y1="1" x2="12" y2="3" />
@@ -92,11 +98,14 @@ export default function Header() {
                 <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
                 <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
               </svg>
-            ) : (
+              <span className="sr-only">Activar modo claro</span>
+            </span>
+            <span className="if-light">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
               </svg>
-            )}
+              <span className="sr-only">Activar modo oscuro</span>
+            </span>
           </button>
           <Link
             href="/buscar"

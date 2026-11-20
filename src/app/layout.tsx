@@ -7,6 +7,7 @@ import { CartProvider } from "@/context/CartContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ToastProvider } from "@/context/ToastContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { COLOR_SCHEME_SCRIPT } from "@/lib/color-scheme";
 
 const CartDrawer = dynamic(() => import("@/components/CartDrawer"));
 
@@ -70,6 +71,17 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`${playfairDisplay.variable} ${dmSans.variable}`}
     >
+      <head>
+        {/*
+          El esquema de color lo decide este <meta> (globals.css lo mapea a
+          `color-scheme`). "light dark" = seguir al sistema, funciona sin JS.
+          El script inline aplica el override guardado ANTES del primer pintado
+          (sin flash). Debe ser síncrono: no usar defer/async/module.
+          suppressHydrationWarning: el script cambia `content` antes de hidratar.
+        */}
+        <meta name="color-scheme" content="light dark" suppressHydrationWarning />
+        <script dangerouslySetInnerHTML={{ __html: COLOR_SCHEME_SCRIPT }} />
+      </head>
       <body className="flex min-h-dvh flex-col bg-surface font-body text-on-surface antialiased">
         <a
           href="#main-content"
