@@ -71,6 +71,9 @@ CREATE TABLE IF NOT EXISTS orders (
                        CHECK (status IN ('pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled')),
   created_at           TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+-- Costo de envío cobrado (COP); el total ya lo incluye. Ejecutar antes de
+-- desplegar el código que lo escribe (npm run db:schema).
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_cost NUMERIC(12, 2);
 
 -- Contactos (src/lib/models/contact.ts)
 CREATE TABLE IF NOT EXISTS contacts (

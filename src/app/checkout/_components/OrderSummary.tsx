@@ -2,6 +2,8 @@
 
 import { formatPrice, getPrice } from '@/lib/format-price';
 import type { CartItem } from '@/types/cart';
+import type { ShippingRates } from '@/lib/shipping';
+import ShippingRow from '@/components/ShippingRow';
 
 export interface AppliedCoupon {
   code: string;
@@ -11,7 +13,11 @@ export interface AppliedCoupon {
 interface OrderSummaryProps {
   items: CartItem[];
   totalPrice: number;
-  discountedTotal: number;
+  /** Total con cupón y envío; null mientras cargan las tarifas. */
+  payableTotal: number | null;
+  shippingCost: number | null;
+  shippingRates: ShippingRates | null;
+  shippingFailed: boolean;
   paymentMethod: 'card' | 'pse';
   coupon: AppliedCoupon | null;
   onCouponRemove: () => void;
@@ -25,7 +31,10 @@ interface OrderSummaryProps {
 export default function OrderSummary({
   items,
   totalPrice,
-  discountedTotal,
+  payableTotal,
+  shippingCost,
+  shippingRates,
+  shippingFailed,
   paymentMethod,
   coupon,
   onCouponRemove,
@@ -111,16 +120,18 @@ export default function OrderSummary({
             <span className="text-green-600">-{formatPrice(coupon.discount)}</span>
           </div>
         )}
-        <div className="mt-2 flex justify-between font-body text-sm">
-          <span className="text-on-surface-variant">Envío</span>
-          <span className="text-on-surface">
-            {paymentMethod === 'pse' ? 'Gratis' : 'Calculado al pagar'}
-          </span>
+        <div className="mt-2 flex flex-col gap-1">
+          <ShippingRow
+            cost={shippingCost}
+            rates={shippingRates}
+            subtotal={totalPrice}
+            failed={shippingFailed}
+          />
         </div>
         <div className="mt-3 border-t border-outline-variant/50 pt-3 flex justify-between">
           <span className="font-body text-base font-medium text-on-surface">Total</span>
           <span className="font-heading text-xl font-medium text-primary">
-            {formatPrice(discountedTotal)}
+            {payableTotal === null ? '—' : formatPrice(payableTotal)}
           </span>
         </div>
       </div>

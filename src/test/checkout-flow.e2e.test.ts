@@ -65,7 +65,7 @@ function buildCheckoutPayload() {
       address: 'Av. Siempre Viva 123',
       city: 'Bogotá',
       state: 'Cundinamarca',
-      zip: '01000',
+      zip: '110111',
       notes: 'Entregar en recepción',
     },
   };
@@ -248,6 +248,58 @@ describe('flujo de checkout completo (carrito → preferencia → webhook → or
     // 4) La orden cambia a "confirmed"
     const updated = await getOrderRepo().findById(lastOrderId);
     expect(updated!.status).toBe('confirmed');
+  });
+
+  it('debería_cobrar_envío_bajo_el_umbral_y_confirmar_con_el_total_que_lo_incluye', async () => {
+    // 1 funda (249.000) < umbral por defecto (450.000) → envío de 25.000.
+    const SHIPPING = 25000;
+    const payload = buildCheckoutPayload();
+    payload.items = [payload.items[0]];
+    payload.items[0].quantity = 1;
+
+    const res = await createPreferencePOST(
+      makeApiRequest('/api/mercadopago/create-preference', {
+        origin: 'https://switchandtech.com',
+        ip: '203.0.113.11',
+        body: payload,
+      })
+    );
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.shippingCost).toBe(SHIPPING);
+    lastOrderId = data.orderId;
+
+    // La orden y la preferencia de MP incluyen el envío en el total.
+    const pending = await getOrderRepo().findById(lastOrderId);
+    expect(pending!.total).toBe(FUNDA_PRICE + SHIPPING);
+    expect(pending!.shippingCost).toBe(SHIPPING);
+    expect(lastPreferenceTotal).toBe(FUNDA_PRICE + SHIPPING);
+
+    // El webhook confirma porque lo pagado coincide con el total con envío.
+    const paymentId = 223344;
+    const requestId = 'req-envio-1';
+    const ts = Math.floor(Date.now() / 1000);
+    const webhookRes = await webhookPOST(
+      makeWebhookRequest(paymentId, requestId, ts, signWebhook(paymentId, requestId, ts))
+    );
+    expect(webhookRes.status).toBe(200);
+    expect((await getOrderRepo().findById(lastOrderId))!.status).toBe('confirmed');
+  });
+
+  it('debería_no_cobrar_envío_desde_el_umbral', async () => {
+    // El flujo base (847.000) supera el umbral: envío gratis, total sin cambios.
+    const res = await createPreferencePOST(
+      makeApiRequest('/api/mercadopago/create-preference', {
+        origin: 'https://switchandtech.com',
+        ip: '203.0.113.12',
+        body: buildCheckoutPayload(),
+      })
+    );
+    const data = await res.json();
+    expect(data.shippingCost).toBe(0);
+    const order = await getOrderRepo().findById(data.orderId);
+    expect(order!.total).toBe(CHECKOUT_TOTAL);
+    expect(lastPreferenceTotal).toBe(CHECKOUT_TOTAL);
   });
 
   it('debería_la_ruta_pública_de_orden_devolver_el_detalle_al_cliente', async () => {

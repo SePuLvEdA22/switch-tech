@@ -11,6 +11,8 @@ import ShippingStep, { EMPTY_SHIPPING, type ShippingForm } from './_components/S
 import PaymentStep from './_components/PaymentStep';
 import OrderSummary, { type AppliedCoupon } from './_components/OrderSummary';
 import type { PaymentMethodType, ColIdentificationType } from '@/lib/mercadopago';
+import { computeShipping } from '@/lib/shipping';
+import { useShippingRates } from '@/lib/use-shipping-rates';
 
 type Step = 'shipping' | 'payment' | 'confirm';
 
@@ -38,6 +40,12 @@ export default function CheckoutPage() {
   const [couponLoading, setCouponLoading] = useState(false);
 
   const discountedTotal = Math.max(0, totalPrice - (coupon?.discount ?? 0));
+
+  // Envío con la misma regla que aplica el servidor (lib/shipping.ts):
+  // sobre el subtotal antes del cupón. null mientras cargan las tarifas.
+  const shippingRates = useShippingRates();
+  const shippingCost = shippingRates.rates ? computeShipping(totalPrice, shippingRates.rates) : null;
+  const payableTotal = shippingCost === null ? null : discountedTotal + shippingCost;
 
   // Mientras se restaura el carrito no se sabe si está vacío: evita el flash
   // de "Carrito vacío" al entrar directo a /checkout o al recargar.
@@ -224,7 +232,7 @@ export default function CheckoutPage() {
               }
               error={error}
               loading={loading}
-              discountedTotal={discountedTotal}
+              payableTotal={payableTotal}
               onBack={() => setStep('shipping')}
               onPay={handlePayment}
             />
@@ -235,7 +243,10 @@ export default function CheckoutPage() {
           <OrderSummary
             items={items}
             totalPrice={totalPrice}
-            discountedTotal={discountedTotal}
+            payableTotal={payableTotal}
+            shippingCost={shippingCost}
+            shippingRates={shippingRates.rates}
+            shippingFailed={shippingRates.status === 'error'}
             paymentMethod={paymentMethod}
             coupon={coupon}
             onCouponRemove={() => {

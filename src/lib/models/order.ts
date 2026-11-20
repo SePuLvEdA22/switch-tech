@@ -38,6 +38,8 @@ export const OrderSchema = z.object({
   total: z.number().nonnegative(),
   /** Descuento aplicado por cupón (COP). El total ya lo descuenta. */
   discount: z.number().nonnegative().optional(),
+  /** Costo de envío cobrado (COP). El total ya lo incluye; 0 = envío gratis. */
+  shippingCost: z.number().nonnegative().optional(),
   promoId: z.string().optional(),
   paymentMethod: paymentMethodSchema.optional(),
   mpPaymentId: z.string().optional(),

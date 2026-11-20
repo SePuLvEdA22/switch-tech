@@ -60,11 +60,13 @@ export const shippingSchema = z
       .regex(/^[\d\s+\-()]+$/, "Teléfono inválido"),
     address: z.string().min(5, "La dirección debe tener al menos 5 caracteres"),
     city: z.string().min(2, "La ciudad es obligatoria"),
-    state: z.string().min(2, "El estado es obligatorio"),
+    state: z.string().min(2, "El departamento es obligatorio"),
+    // Código postal de Colombia: 6 dígitos (antes exigía 5, formato de México,
+    // y rechazaba códigos reales como 110111 de Bogotá).
     zip: z
       .string()
-      .min(5, "El CP debe tener al menos 5 caracteres")
-      .regex(/^\d{5}$/, "CP inválido (5 dígitos)"),
+      .trim()
+      .regex(/^\d{6}$/, "El código postal debe tener 6 dígitos"),
     notes: z.string().optional(),
   })
   .strict();

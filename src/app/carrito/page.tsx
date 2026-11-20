@@ -6,9 +6,14 @@ import Link from 'next/link';
 import ProductImage from '@/components/ProductImage';
 import PriceTag from '@/components/PriceTag';
 import CartSkeleton from '@/components/CartSkeleton';
+import ShippingRow from '@/components/ShippingRow';
+import { computeShipping } from '@/lib/shipping';
+import { useShippingRates } from '@/lib/use-shipping-rates';
 
 export default function CarritoPage() {
   const { items, hydrated, removeItem, updateQuantity, totalPrice, clearCart } = useCart();
+  const shippingRates = useShippingRates();
+  const shippingCost = shippingRates.rates ? computeShipping(totalPrice, shippingRates.rates) : null;
 
   if (!hydrated) {
     return (
@@ -124,15 +129,17 @@ export default function CarritoPage() {
                 <span className="text-on-surface-variant">Subtotal</span>
                 <span className="text-on-surface">{formatPrice(totalPrice)}</span>
               </div>
-              <div className="flex justify-between font-body text-sm">
-                <span className="text-on-surface-variant">Envío</span>
-                <span className="text-on-surface">Calculado al pagar</span>
-              </div>
+              <ShippingRow
+                cost={shippingCost}
+                rates={shippingRates.rates}
+                subtotal={totalPrice}
+                failed={shippingRates.status === 'error'}
+              />
               <div className="border-t border-outline-variant/50 pt-3">
                 <div className="flex justify-between">
                   <span className="font-body text-base font-medium text-on-surface">Total</span>
                   <span className="font-heading text-xl font-medium text-primary">
-                    {formatPrice(totalPrice)}
+                    {shippingRates.status === 'loading' ? '—' : formatPrice(totalPrice + (shippingCost ?? 0))}
                   </span>
                 </div>
               </div>

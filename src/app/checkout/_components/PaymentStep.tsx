@@ -22,7 +22,8 @@ interface PaymentStepProps {
   onDocNumberErrorClear: () => void;
   error: string;
   loading: boolean;
-  discountedTotal: number;
+  /** Total con cupón y envío; null si aún no se conocen las tarifas de envío. */
+  payableTotal: number | null;
   onBack: () => void;
   onPay: () => void;
 }
@@ -38,7 +39,7 @@ export default function PaymentStep({
   onDocNumberErrorClear,
   error,
   loading,
-  discountedTotal,
+  payableTotal,
   onBack,
   onPay,
 }: PaymentStepProps) {
@@ -185,10 +186,12 @@ export default function PaymentStep({
             <span className="flex items-center justify-center gap-2">
               <Spinner /> Conectando con MercadoPago...
             </span>
+          ) : payableTotal === null ? (
+            paymentMethod === 'pse' ? 'Pagar con PSE' : 'Pagar'
           ) : paymentMethod === 'pse' ? (
-            `Pagar con PSE — ${formatPrice(discountedTotal)}`
+            `Pagar con PSE — ${formatPrice(payableTotal)}`
           ) : (
-            `Pagar ${formatPrice(discountedTotal)}`
+            `Pagar ${formatPrice(payableTotal)}`
           )}
         </button>
       </div>

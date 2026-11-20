@@ -178,6 +178,7 @@ function orderToParams(o: StoreOrder): unknown[] {
     o.total,
     o.discount ?? null,
     o.promoId ?? null,
+    o.shippingCost ?? null,
     o.paymentMethod ?? null,
     o.mpPaymentId ?? null,
     o.mpPreferenceId ?? null,
@@ -188,12 +189,12 @@ function orderToParams(o: StoreOrder): unknown[] {
 }
 // prettier-ignore
 const UPSERT_ORDERS = `
-INSERT INTO orders (id, user_id, items, shipping, total, discount, promo_id, payment_method, mp_payment_id, mp_preference_id, payer_identification, status, created_at)
+INSERT INTO orders (id, user_id, items, shipping, total, discount, promo_id, shipping_cost, payment_method, mp_payment_id, mp_preference_id, payer_identification, status, created_at)
 VALUES @VALUES@
 ON CONFLICT (id) DO UPDATE SET
   user_id = EXCLUDED.user_id, items = EXCLUDED.items, shipping = EXCLUDED.shipping,
   total = EXCLUDED.total, discount = EXCLUDED.discount, promo_id = EXCLUDED.promo_id,
-  payment_method = EXCLUDED.payment_method, mp_payment_id = EXCLUDED.mp_payment_id,
+  shipping_cost = EXCLUDED.shipping_cost, payment_method = EXCLUDED.payment_method, mp_payment_id = EXCLUDED.mp_payment_id,
   mp_preference_id = EXCLUDED.mp_preference_id, payer_identification = EXCLUDED.payer_identification,
   status = EXCLUDED.status, created_at = EXCLUDED.created_at`;
 
@@ -465,6 +466,7 @@ export class PostgresStore implements DataStore {
         total: toNum(row.total) ?? 0,
         discount: toNum(row.discount),
         promoId: row.promo_id == null ? undefined : String(row.promo_id),
+        shippingCost: toNum(row.shipping_cost),
         paymentMethod:
           row.payment_method == null
             ? undefined

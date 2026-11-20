@@ -162,7 +162,7 @@ export default function ShippingStep({
             htmlFor="s-state"
             className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant"
           >
-            Estado/Depto *
+            Departamento *
           </label>
           <input
             id="s-state"
@@ -189,6 +189,8 @@ export default function ShippingStep({
             onChange={(e) => onShippingChange({ ...shipping, zip: e.target.value })}
             className={inputClass('zip')}
             autoComplete="postal-code"
+            inputMode="numeric"
+            maxLength={6}
             aria-invalid={Boolean(errors.zip)}
             aria-describedby={errors.zip ? 'err-s-zip' : undefined}
             required
