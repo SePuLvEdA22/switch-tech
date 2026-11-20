@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
 import { getPrice } from '@/lib/format-price';
 import CheckoutStepper from './_components/CheckoutStepper';
 import CartSkeleton from '@/components/CartSkeleton';
@@ -13,18 +14,61 @@ import OrderSummary, { type AppliedCoupon } from './_components/OrderSummary';
 import type { PaymentMethodType, ColIdentificationType } from '@/lib/mercadopago';
 import { computeShipping } from '@/lib/shipping';
 import { useShippingRates } from '@/lib/use-shipping-rates';
+import {
+  SHIPPING_DRAFT_KEY,
+  MP_ORDER_KEY,
+  MP_METHOD_KEY,
+  clearShippingDraft,
+} from '@/lib/checkout-session';
 
 type Step = 'shipping' | 'payment' | 'confirm';
+
+function readShippingDraft(): ShippingForm {
+  if (typeof window === 'undefined') return EMPTY_SHIPPING;
+  try {
+    const raw = window.sessionStorage.getItem(SHIPPING_DRAFT_KEY);
+    if (!raw) return EMPTY_SHIPPING;
+    const parsed = JSON.parse(raw) as Partial<ShippingForm>;
+    // Solo campos conocidos y de texto (el storage es entrada no confiable).
+    const draft = { ...EMPTY_SHIPPING };
+    for (const key of Object.keys(EMPTY_SHIPPING) as (keyof ShippingForm)[]) {
+      if (typeof parsed[key] === 'string') draft[key] = parsed[key];
+    }
+    return draft;
+  } catch {
+    return EMPTY_SHIPPING;
+  }
+}
+
 
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, hydrated, totalPrice, clearCart } = useCart();
+  const { user } = useAuth();
   const [step, setStep] = useState<Step>('shipping');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState('');
 
-  const [shipping, setShipping] = useState<ShippingForm>(EMPTY_SHIPPING);
+  // Lazy init desde sessionStorage: el formulario solo se pinta cuando el
+  // carrito ya está hidratado, así que no hay diferencias con el HTML del servidor.
+  const [shipping, setShipping] = useState<ShippingForm>(readShippingDraft);
+
+  useEffect(() => {
+    try {
+      window.sessionStorage.setItem(SHIPPING_DRAFT_KEY, JSON.stringify(shipping));
+    } catch {
+      /* almacenamiento no disponible: el formulario sigue funcionando */
+    }
+  }, [shipping]);
+
+  // Con sesión iniciada, precargar nombre y email (sin pisar lo ya escrito).
+  // La sesión llega async: ajuste de estado durante el render, una sola vez.
+  const [prefilledFor, setPrefilledFor] = useState<string | null>(null);
+  if (user && prefilledFor !== user.id) {
+    setPrefilledFor(user.id);
+    setShipping((s) => ({ ...s, name: s.name || user.name, email: s.email || user.email }));
+  }
 
   // Estado del método de pago
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>('card');
@@ -38,6 +82,13 @@ export default function CheckoutPage() {
   const [coupon, setCoupon] = useState<AppliedCoupon | null>(null);
   const [couponError, setCouponError] = useState('');
   const [couponLoading, setCouponLoading] = useState(false);
+
+  // Un cupón se valida contra un subtotal: si el carrito cambia, el descuento
+  // mostrado deja de ser correcto. Se quita y se pide aplicarlo de nuevo.
+  if (coupon && coupon.subtotal !== totalPrice) {
+    setCoupon(null);
+    setCouponError('Tu carrito cambió. Vuelve a aplicar el cupón.');
+  }
 
   const discountedTotal = Math.max(0, totalPrice - (coupon?.discount ?? 0));
 
@@ -105,7 +156,7 @@ export default function CheckoutPage() {
         setCouponError(data.error || 'Cupón inválido');
         return;
       }
-      setCoupon({ code, discount: data.discount });
+      setCoupon({ code, discount: data.discount, subtotal: totalPrice });
     } catch {
       setCouponError('No se pudo validar el cupón');
     } finally {
@@ -168,6 +219,7 @@ export default function CheckoutPage() {
       // En modo test, redirigir directamente a la orden
       if (data.testMode) {
         clearCart();
+        clearShippingDraft();
         setStep('confirm');
         router.push(`/orden?id=${data.orderId}&status=success`);
         return;
@@ -178,8 +230,11 @@ export default function CheckoutPage() {
 
       if (initPoint) {
         // Guardar referencia para cuando vuelva de MP
-        sessionStorage.setItem('mp-order-id', data.orderId);
-        sessionStorage.setItem('mp-payment-method', paymentMethod);
+        // Se guarda la orden para que /orden, al volver de MP, la reconozca y
+        // vacíe el carrito. Los datos de envío se conservan hasta entonces
+        // (si el pago falla, el cliente no tiene que escribirlos de nuevo).
+        sessionStorage.setItem(MP_ORDER_KEY, data.orderId);
+        sessionStorage.setItem(MP_METHOD_KEY, paymentMethod);
         window.location.href = initPoint;
       } else {
         throw new Error('No se recibió la URL de pago');

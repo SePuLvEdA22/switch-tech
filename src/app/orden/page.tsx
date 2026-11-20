@@ -3,6 +3,8 @@
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Suspense, useEffect, useState } from 'react';
+import { useCart } from '@/context/CartContext';
+import { consumePaidOrder } from '@/lib/checkout-session';
 import { formatPrice } from '@/lib/format-price';
 import type { Order } from '@/lib/models';
 
@@ -81,6 +83,15 @@ function OrderContent() {
   }, [orderId, status, router]);
 
   // Intentar cargar detalles de la orden
+  // Al volver de Mercado Pago (éxito o pendiente, p. ej. PSE), vaciar el
+  // carrito de esta compra. Antes nunca se vaciaba y el cliente podía pagar
+  // dos veces lo mismo. Solo para la orden que esta pestaña envió a pagar.
+  const { clearCart } = useCart();
+  useEffect(() => {
+    if (!orderId || status === 'failure') return;
+    if (consumePaidOrder(orderId)) clearCart();
+  }, [orderId, status, clearCart]);
+
   useEffect(() => {
     let cancelled = false;
 

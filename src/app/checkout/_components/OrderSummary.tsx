@@ -8,6 +8,8 @@ import ShippingRow from '@/components/ShippingRow';
 export interface AppliedCoupon {
   code: string;
   discount: number;
+  /** Subtotal contra el que se validó: si el carrito cambia, se descarta. */
+  subtotal: number;
 }
 
 interface OrderSummaryProps {
