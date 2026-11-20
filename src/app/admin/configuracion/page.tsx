@@ -96,12 +96,14 @@ export default function AdminSettingsPage() {
             <input id="cfg-instagram" value={form.instagram} onChange={(e) => set({ instagram: e.target.value })} placeholder="@switchandtech" className="input-field" />
           </div>
           <div className="flex flex-col gap-1">
-            <label className="admin-label" htmlFor="cfg-shipping">Costo de envío ($)</label>
-            <input id="cfg-shipping" type="number" min="0" step="0.01" value={form.shippingCost} onChange={(e) => set({ shippingCost: Number(e.target.value) })} className="input-field" />
+            <label className="admin-label" htmlFor="cfg-shipping">Costo de envío (COP)</label>
+            <input id="cfg-shipping" type="number" min="0" step="1000" value={form.shippingCost} onChange={(e) => set({ shippingCost: Number(e.target.value) })} aria-describedby="cfg-shipping-hint" className="input-field" />
+            <p id="cfg-shipping-hint" className="font-body text-xs text-on-surface-variant">Se cobra en el checkout a pedidos bajo el umbral. 0 = envío siempre gratis.</p>
           </div>
           <div className="flex flex-col gap-1">
-            <label className="admin-label" htmlFor="cfg-freeship">Envío gratis desde ($)</label>
-            <input id="cfg-freeship" type="number" min="0" step="0.01" value={form.freeShippingThreshold} onChange={(e) => set({ freeShippingThreshold: Number(e.target.value) })} className="input-field" />
+            <label className="admin-label" htmlFor="cfg-freeship">Envío gratis desde (COP)</label>
+            <input id="cfg-freeship" type="number" min="0" step="1000" value={form.freeShippingThreshold} onChange={(e) => set({ freeShippingThreshold: Number(e.target.value) })} aria-describedby="cfg-freeship-hint" className="input-field" />
+            <p id="cfg-freeship-hint" className="font-body text-xs text-on-surface-variant">Subtotal de productos, antes del cupón. 0 = nunca gratis. También se muestra en /envios.</p>
           </div>
         </div>
 

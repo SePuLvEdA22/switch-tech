@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function FAQPage() {
   return (
     <div className="container-store py-12 animate-fade-in">
-      <h1 className="font-heading text-4xl font-medium text-on-surface md:text-5xl">Preguntas frecuentes</h1>
+      <h1 className="font-heading text-4xl font-bold text-on-surface md:text-5xl">Preguntas frecuentes</h1>
       <div className="mt-10 flex max-w-3xl flex-col gap-8 font-body text-base leading-relaxed text-on-surface-variant">
         <FaqItem question="¿Hacen envíos a toda Colombia?">
           Sí, realizamos envíos a todo el territorio colombiano con cobertura completa. Los tiempos varían según la zona.
@@ -46,7 +46,7 @@ export default function FAQPage() {
 function FaqItem({ question, children }: { question: string; children: React.ReactNode }) {
   return (
     <div>
-      <h2 className="mb-2 font-heading text-lg font-medium text-on-surface">{question}</h2>
+      <h2 className="mb-2 font-heading text-lg font-bold text-on-surface">{question}</h2>
       <p className="text-on-surface-variant">{children}</p>
     </div>
   );

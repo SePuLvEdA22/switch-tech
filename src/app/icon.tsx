@@ -22,7 +22,7 @@ export default async function Icon({ id }: { id: Promise<string | number> }) {
           width: size,
           height: size,
           borderRadius,
-          background: '#725856',
+          background: '#0F4C4A',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

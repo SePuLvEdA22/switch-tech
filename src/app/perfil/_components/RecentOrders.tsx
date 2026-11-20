@@ -44,7 +44,7 @@ export default function RecentOrders() {
     <section className="rounded-2xl border border-outline-variant/50 bg-surface p-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="font-heading text-lg font-medium text-on-surface">
+          <h2 className="font-heading text-lg font-bold text-on-surface">
             Últimas órdenes
           </h2>
           <p className="mt-1 font-body text-sm text-on-surface-variant">
@@ -108,7 +108,7 @@ export default function RecentOrders() {
                 </div>
               </div>
               <div className="shrink-0 text-right">
-                <p className="font-heading text-sm font-medium text-on-surface">{formatPrice(order.total)}</p>
+                <p className="font-heading text-sm font-bold text-on-surface">{formatPrice(order.total)}</p>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="ml-auto mt-1 text-outline" aria-hidden="true">
                   <polyline points="9 18 15 12 9 6" />
                 </svg>

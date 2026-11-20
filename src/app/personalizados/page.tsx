@@ -98,7 +98,7 @@ export default function PersonalizadosPage() {
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>
-          <h2 className="font-heading text-2xl font-medium text-on-surface">¡Recibimos tu diseño!</h2>
+          <h2 className="font-heading text-2xl font-bold text-on-surface">¡Recibimos tu diseño!</h2>
           <p className="mt-2 font-body text-base text-on-surface-variant">
             Te contactaremos pronto para confirmar los detalles de tu pedido personalizado.
           </p>
@@ -123,7 +123,7 @@ export default function PersonalizadosPage() {
   return (
     <div className="container-store py-12 animate-fade-in">
       <div className="mb-10">
-        <h1 className="font-heading text-4xl font-medium text-on-surface md:text-5xl">Personalizados</h1>
+        <h1 className="font-heading text-4xl font-bold text-on-surface md:text-5xl">Personalizados</h1>
         <p className="mt-3 max-w-xl font-body text-base leading-relaxed text-on-surface-variant">
           Crea algo único. Elige tu producto, cuéntanos tu idea y lo hacemos realidad.
         </p>
@@ -140,7 +140,7 @@ export default function PersonalizadosPage() {
               <button
                 key={type.value}
                 onClick={() => setSelectedType(type.value)}
-                className={`rounded-lg border px-5 py-3 font-body text-sm font-medium uppercase tracking-widest transition-all ${
+                className={`rounded-lg border px-5 py-3 font-body text-sm font-medium transition-all ${
                   selectedType === type.value
                     ? 'border-primary bg-primary text-on-primary'
                     : 'border-outline-variant text-on-surface-variant hover:border-primary'
@@ -153,7 +153,7 @@ export default function PersonalizadosPage() {
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
             <div>
-              <label htmlFor="design-description" className="mb-2 block font-body text-sm font-medium text-on-surface-variant uppercase tracking-wider">
+              <label htmlFor="design-description" className="mb-2 block font-body text-sm font-medium text-on-surface-variant">
                 ¿Qué diseño tienes en mente? *
               </label>
               <textarea
@@ -169,7 +169,7 @@ export default function PersonalizadosPage() {
             </div>
 
             <div>
-              <label htmlFor="file-upload" className="mb-2 block font-body text-sm font-medium text-on-surface-variant uppercase tracking-wider">
+              <label htmlFor="file-upload" className="mb-2 block font-body text-sm font-medium text-on-surface-variant">
                 Sube tu referencia (opcional)
               </label>
               <label
@@ -212,7 +212,7 @@ export default function PersonalizadosPage() {
           {selectedProduct && (
             <>
               <ProductImage product={selectedProduct} className="mb-6 aspect-square rounded-xl" />
-              <h3 className="font-heading text-xl font-medium text-on-surface">
+              <h3 className="font-heading text-xl font-bold text-on-surface">
                 {selectedProduct.name}
               </h3>
               <p className="mt-2 font-body text-base leading-relaxed text-on-surface-variant">
@@ -220,7 +220,7 @@ export default function PersonalizadosPage() {
               </p>
               <PriceTag
                 product={selectedProduct}
-                className="mt-4 font-heading text-2xl font-medium"
+                className="mt-4 font-heading text-2xl font-bold"
                 priceClassName="text-primary"
               />
             </>

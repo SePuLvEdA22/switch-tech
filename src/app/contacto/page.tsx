@@ -60,7 +60,7 @@ export default function ContactoPage() {
               <path d="M22 2L15 22l-4-9-9-4z" />
             </svg>
           </div>
-          <h2 className="font-heading text-2xl font-medium text-on-surface">¡Mensaje enviado!</h2>
+          <h2 className="font-heading text-2xl font-bold text-on-surface">¡Mensaje enviado!</h2>
           <p className="mt-2 font-body text-base text-on-surface-variant">
             Gracias por contactarnos. Te responderemos a la brevedad.
           </p>
@@ -78,7 +78,7 @@ export default function ContactoPage() {
   return (
     <div className="container-store py-12 animate-fade-in">
       <div className="mb-10">
-        <h1 className="font-heading text-4xl font-medium text-on-surface md:text-5xl">Contacto</h1>
+        <h1 className="font-heading text-4xl font-bold text-on-surface md:text-5xl">Contacto</h1>
         <p className="mt-3 max-w-xl font-body text-base leading-relaxed text-on-surface-variant">
           Estamos aquí para ayudarte. Escríbenos y te responderemos lo antes posible.
         </p>
@@ -88,11 +88,12 @@ export default function ContactoPage() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
-              <label htmlFor="name" className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant">
+              <label htmlFor="name" className="mb-2 block font-body text-sm font-medium text-on-surface-variant">
                 Nombre *
               </label>
               <input
                 id="name"
+                autoComplete="name"
                 name="name"
                 type="text"
                 className={`input-field ${errors.name ? 'border-error' : ''}`}
@@ -101,11 +102,12 @@ export default function ContactoPage() {
               {errors.name && <p className="mt-1 font-body text-xs text-error" role="alert">{errors.name}</p>}
             </div>
             <div>
-              <label htmlFor="email" className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant">
+              <label htmlFor="email" className="mb-2 block font-body text-sm font-medium text-on-surface-variant">
                 Email *
               </label>
               <input
                 id="email"
+                autoComplete="email"
                 name="email"
                 type="email"
                 className={`input-field ${errors.email ? 'border-error' : ''}`}
@@ -115,7 +117,7 @@ export default function ContactoPage() {
             </div>
           </div>
           <div>
-            <label htmlFor="subject" className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant">
+            <label htmlFor="subject" className="mb-2 block font-body text-sm font-medium text-on-surface-variant">
               Asunto *
             </label>
             <input
@@ -128,7 +130,7 @@ export default function ContactoPage() {
             {errors.subject && <p className="mt-1 font-body text-xs text-error" role="alert">{errors.subject}</p>}
           </div>
           <div>
-            <label htmlFor="message" className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant">
+            <label htmlFor="message" className="mb-2 block font-body text-sm font-medium text-on-surface-variant">
               Mensaje *
             </label>
             <textarea
@@ -152,7 +154,7 @@ export default function ContactoPage() {
 
         <div className="flex flex-col gap-8">
           <div className="rounded-2xl bg-surface-container p-6">
-            <h3 className="font-heading text-lg font-medium text-on-surface">Información de contacto</h3>
+            <h3 className="font-heading text-lg font-bold text-on-surface">Información de contacto</h3>
             <div className="mt-4 flex flex-col gap-4">
               {[
                 { label: 'Email', value: 'hola@switchandtech.com' },
@@ -161,7 +163,7 @@ export default function ContactoPage() {
                 { label: 'Ubicación', value: 'Bogotá, Colombia' },
               ].map((info) => (
                 <div key={info.label}>
-                  <p className="font-body text-xs font-medium uppercase tracking-wider text-on-surface-variant">
+                  <p className="font-body text-xs font-medium text-on-surface-variant">
                     {info.label}
                   </p>
                   <p className="mt-1 font-body text-base text-on-surface">{info.value}</p>
@@ -171,7 +173,7 @@ export default function ContactoPage() {
           </div>
 
           <div className="rounded-2xl bg-surface-container p-6">
-            <h3 className="font-heading text-lg font-medium text-on-surface">Síguenos</h3>
+            <h3 className="font-heading text-lg font-bold text-on-surface">Síguenos</h3>
             <p className="mt-2 font-body text-sm text-on-surface-variant">
               Mantente al día con nuestras últimas novedades y colecciones.
             </p>

@@ -5,14 +5,29 @@ import { formatPrice } from '@/lib/format-price';
 import Link from 'next/link';
 import ProductImage from '@/components/ProductImage';
 import PriceTag from '@/components/PriceTag';
+import CartSkeleton from '@/components/CartSkeleton';
+import ShippingRow from '@/components/ShippingRow';
+import { computeShipping } from '@/lib/shipping';
+import { useShippingRates } from '@/lib/use-shipping-rates';
 
 export default function CarritoPage() {
-  const { items, removeItem, updateQuantity, totalPrice, clearCart } = useCart();
+  const { items, hydrated, removeItem, updateQuantity, totalPrice, clearCart } = useCart();
+  const shippingRates = useShippingRates();
+  const shippingCost = shippingRates.rates ? computeShipping(totalPrice, shippingRates.rates) : null;
+
+  if (!hydrated) {
+    return (
+      <div className="container-store py-12">
+        <h1 className="mb-8 font-heading text-4xl font-bold text-on-surface md:text-5xl">Carrito</h1>
+        <CartSkeleton />
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (
       <div className="container-store py-12">
-        <h1 className="mb-8 font-heading text-4xl font-medium text-on-surface md:text-5xl">Carrito</h1>
+        <h1 className="mb-8 font-heading text-4xl font-bold text-on-surface md:text-5xl">Carrito</h1>
         <div className="flex flex-col items-center justify-center rounded-2xl bg-surface-container py-20 text-center">
           <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="text-outline" aria-hidden="true">
             <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
@@ -31,7 +46,7 @@ export default function CarritoPage() {
   return (
     <div className="container-store py-12">
       <div className="mb-8 flex items-center justify-between">
-        <h1 className="font-heading text-4xl font-medium text-on-surface md:text-5xl">Carrito</h1>
+        <h1 className="font-heading text-4xl font-bold text-on-surface md:text-5xl">Carrito</h1>
         <button
           onClick={clearCart}
           className="font-body text-sm text-on-surface-variant underline transition-colors hover:text-error"
@@ -51,7 +66,7 @@ export default function CarritoPage() {
                     <div>
                       <Link
                         href={`/producto/${item.product.id}`}
-                        className="font-heading text-base font-medium text-on-surface transition-colors hover:text-primary"
+                        className="font-heading text-base font-bold text-on-surface transition-colors hover:text-primary"
                       >
                         {item.product.name}
                       </Link>
@@ -108,26 +123,28 @@ export default function CarritoPage() {
 
         <div className="lg:col-span-1">
           <div className="rounded-2xl bg-surface-container p-6">
-            <h2 className="font-heading text-xl font-medium text-on-surface">Resumen</h2>
+            <h2 className="font-heading text-xl font-bold text-on-surface">Resumen</h2>
             <div className="mt-4 flex flex-col gap-3">
               <div className="flex justify-between font-body text-sm">
                 <span className="text-on-surface-variant">Subtotal</span>
                 <span className="text-on-surface">{formatPrice(totalPrice)}</span>
               </div>
-              <div className="flex justify-between font-body text-sm">
-                <span className="text-on-surface-variant">Envío</span>
-                <span className="text-on-surface">Calculado al pagar</span>
-              </div>
+              <ShippingRow
+                cost={shippingCost}
+                rates={shippingRates.rates}
+                subtotal={totalPrice}
+                failed={shippingRates.status === 'error'}
+              />
               <div className="border-t border-outline-variant/50 pt-3">
                 <div className="flex justify-between">
                   <span className="font-body text-base font-medium text-on-surface">Total</span>
-                  <span className="font-heading text-xl font-medium text-primary">
-                    {formatPrice(totalPrice)}
+                  <span className="font-heading text-xl font-bold text-primary">
+                    {shippingRates.status === 'loading' ? '—' : formatPrice(totalPrice + (shippingCost ?? 0))}
                   </span>
                 </div>
               </div>
             </div>
-            <Link href="/checkout" className="btn-primary mt-6 w-full block text-center">
+            <Link href="/checkout" className="btn-primary mt-6 w-full">
               Proceder al pago
             </Link>
             <Link

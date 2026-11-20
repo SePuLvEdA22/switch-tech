@@ -1,7 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getOrderRepo, getPromoRepo } from "@/lib/repositories";
+import { getOrderRepo, getPromoRepo, getSettingsRepo } from "@/lib/repositories";
+import { computeShipping } from "@/lib/shipping";
 import {
   buildPreference,
   applyDiscountToPreferenceItems,
@@ -131,7 +132,13 @@ export async function POST(request: Request) {
       }
     }
 
-    const orderTotal = validated.total - discount;
+    // Envío: regla única (lib/shipping) con los valores de Admin → Configuración.
+    // Se calcula sobre el subtotal de catálogo, antes del cupón.
+    const shippingCost = computeShipping(validated.total, await getSettingsRepo().get());
+
+    // Total autoritativo: productos - cupón + envío. El webhook compara lo
+    // pagado contra este valor, por eso el envío va también en la preferencia.
+    const orderTotal = validated.total - discount + shippingCost;
 
     // Crear orden en estado "pending" con información de pago
     const orderId = `ORD-${randomUUID()}`;
@@ -143,16 +150,22 @@ export async function POST(request: Request) {
 
     // Construir preferencia usando la librería (items canónicos del catálogo).
     // Si hay cupón, ajustamos unit_price para que MercadoPago cobre el total correcto.
+    const preferenceItems = applyDiscountToPreferenceItems(
+      validated.items.map((item) => ({
+        id: item.productId,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+      })),
+      discount
+    );
+    // El envío es una línea propia (MP exige unit_price > 0: solo si se cobra).
+    if (shippingCost > 0) {
+      preferenceItems.push({ id: "envio", name: "Envío", price: shippingCost, quantity: 1 });
+    }
+
     const preference = buildPreference({
-      items: applyDiscountToPreferenceItems(
-        validated.items.map((item) => ({
-          id: item.productId,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-        })),
-        discount
-      ),
+      items: preferenceItems,
       paymentMethod: paymentMethod as PaymentMethodType,
       orderId,
       payer: payer
@@ -197,6 +210,7 @@ export async function POST(request: Request) {
       // Total recalculado en el servidor con precios del catálogo
       total: orderTotal,
       ...(discount > 0 ? { discount, promoId } : {}),
+      shippingCost,
       paymentMethod,
       payerIdentification: payer?.identification,
       status: "pending" as const,
@@ -213,6 +227,7 @@ export async function POST(request: Request) {
           message: "Modo de prueba — Configura MP_ACCESS_TOKEN en .env para activar pagos reales.",
           orderId,
           discount,
+          shippingCost,
           preference: {
             id: `TEST_${Date.now()}`,
             init_point: `${origin}/orden?status=success&id=${orderId}`,
@@ -255,6 +270,7 @@ export async function POST(request: Request) {
       {
         orderId,
         discount,
+        shippingCost,
         preference: {
           id: data.id,
           init_point: data.init_point,

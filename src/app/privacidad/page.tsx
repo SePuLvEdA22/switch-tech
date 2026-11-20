@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function PrivacidadPage() {
   return (
     <div className="container-store py-12 animate-fade-in">
-      <h1 className="font-heading text-4xl font-medium text-on-surface md:text-5xl">
+      <h1 className="font-heading text-4xl font-bold text-on-surface md:text-5xl">
         Política de Privacidad
       </h1>
       <p className="mt-3 font-body text-sm text-on-surface-variant">
@@ -20,7 +20,7 @@ export default function PrivacidadPage() {
 
       <div className="mt-10 flex max-w-3xl flex-col gap-8 font-body text-base leading-relaxed text-on-surface-variant">
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             1. Introducción
           </h2>
           <p>
@@ -34,7 +34,7 @@ export default function PrivacidadPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             2. Datos que recopilamos
           </h2>
           <p>Podemos recopilar la siguiente información:</p>
@@ -59,7 +59,7 @@ export default function PrivacidadPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             3. Finalidad del tratamiento
           </h2>
           <p>Utilizamos tus datos para:</p>
@@ -74,7 +74,7 @@ export default function PrivacidadPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             4. Base legal del tratamiento
           </h2>
           <p>
@@ -85,7 +85,7 @@ export default function PrivacidadPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             5. Almacenamiento y seguridad
           </h2>
           <p>
@@ -98,7 +98,7 @@ export default function PrivacidadPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             6. Compartición de datos
           </h2>
           <p>
@@ -112,7 +112,7 @@ export default function PrivacidadPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             7. Tus derechos (ARCO)
           </h2>
           <p>
@@ -139,12 +139,12 @@ export default function PrivacidadPage() {
           </ul>
           <p className="mt-3">
             Para ejercer tus derechos, escríbenos a{' '}
-            <span className="text-primary">privacidad@switchandtech.mx</span>.
+            <span className="text-primary">privacidad@switchandtech.com</span>.
           </p>
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             8. Cookies
           </h2>
           <p>
@@ -156,7 +156,7 @@ export default function PrivacidadPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             9. Contacto
           </h2>
           <p>
@@ -166,14 +166,14 @@ export default function PrivacidadPage() {
             <p className="text-on-surface">
               <strong>Switch&Tech</strong>
             </p>
-            <p>Email: privacidad@switchandtech.mx</p>
+            <p>Email: privacidad@switchandtech.com</p>
             <p>Teléfono: +57 300 123 4567</p>
             <p>Bogotá, Colombia</p>
           </div>
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             10. Cambios a esta política
           </h2>
           <p>

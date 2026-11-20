@@ -16,11 +16,11 @@ function SuccessState() {
             <polyline points="20 6 9 17 4 12" />
           </svg>
         </div>
-        <h1 className="font-heading text-3xl font-medium text-on-surface">¡Registro exitoso!</h1>
+        <h1 className="font-heading text-3xl font-bold text-on-surface">¡Registro exitoso!</h1>
         <p className="mt-2 font-body text-base text-on-surface-variant">
           Ahora puedes iniciar sesión con tu cuenta.
         </p>
-        <Link href="/iniciar-sesion" className="btn-primary mt-6 inline-block">
+        <Link href="/iniciar-sesion" className="btn-primary mt-6">
           Iniciar sesión
         </Link>
       </div>
@@ -141,7 +141,7 @@ export default function RegistrarsePage() {
   return (
     <div className="container-store flex flex-1 items-center justify-center py-12">
       <div className="w-full max-w-md animate-fade-in">
-        <h1 className="font-heading text-3xl font-medium text-on-surface md:text-4xl text-center">
+        <h1 className="font-heading text-3xl font-bold text-on-surface md:text-4xl text-center">
           Crear cuenta
         </h1>
         <p className="mt-2 text-center font-body text-base text-on-surface-variant">
@@ -150,11 +150,12 @@ export default function RegistrarsePage() {
 
         <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-5" noValidate>
           <div>
-            <label htmlFor="name" className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant">
+            <label htmlFor="name" className="mb-2 block font-body text-sm font-medium text-on-surface-variant">
               Nombre
             </label>
             <input
               id="name"
+              autoComplete="name"
               name="name"
               type="text"
               className={`input-field ${errors.name ? 'border-error' : ''}`}
@@ -163,11 +164,12 @@ export default function RegistrarsePage() {
             {errors.name && <p className="mt-1 font-body text-xs text-error" role="alert">{errors.name}</p>}
           </div>
           <div>
-            <label htmlFor="email" className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant">
+            <label htmlFor="email" className="mb-2 block font-body text-sm font-medium text-on-surface-variant">
               Email
             </label>
             <input
               id="email"
+              autoComplete="email"
               name="email"
               type="email"
               className={`input-field ${errors.email ? 'border-error' : ''}`}
@@ -178,11 +180,12 @@ export default function RegistrarsePage() {
 
           {/* Password field */}
           <div>
-            <label htmlFor="password" className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant">
+            <label htmlFor="password" className="mb-2 block font-body text-sm font-medium text-on-surface-variant">
               Contraseña
             </label>
             <input
               id="password"
+              autoComplete="new-password"
               name="password"
               type="password"
               value={password}
@@ -237,11 +240,12 @@ export default function RegistrarsePage() {
 
           {/* Confirm password field */}
           <div>
-            <label htmlFor="confirm" className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant">
+            <label htmlFor="confirm" className="mb-2 block font-body text-sm font-medium text-on-surface-variant">
               Confirmar contraseña
             </label>
             <input
               id="confirm"
+              autoComplete="new-password"
               name="confirm"
               type="password"
               value={confirm}

@@ -1,13 +1,20 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useId, type FocusEvent } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 
+/**
+ * Disclosure de navegación (no un menú ARIA): es una lista corta de enlaces
+ * que se recorre con Tab, así que no promete flechas que no tiene.
+ * Esc cierra y devuelve el foco al botón; salir con Tab o clic fuera cierra.
+ */
 export default function UserDropdown() {
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const panelId = useId();
 
   const initials = user?.name
     ?.split(' ')
@@ -17,8 +24,15 @@ export default function UserDropdown() {
     .slice(0, 2) || '?';
 
   const handleEscape = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Escape') setOpen(false);
+    if (e.key !== 'Escape') return;
+    setOpen(false);
+    triggerRef.current?.focus();
   }, []);
+
+  // Cerrar cuando el foco sale del componente (Tab fuera del último enlace).
+  const handleBlur = (e: FocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpen(false);
+  };
 
   useEffect(() => {
     if (open) {
@@ -40,12 +54,15 @@ export default function UserDropdown() {
   }, [open]);
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative" onBlur={handleBlur}>
       <button
+        ref={triggerRef}
+        type="button"
         onClick={() => setOpen(!open)}
         className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-on-primary transition-transform hover:scale-105"
         aria-label="Menú de usuario"
         aria-expanded={open}
+        aria-controls={panelId}
       >
         {initials}
       </button>
@@ -53,7 +70,7 @@ export default function UserDropdown() {
       {open && (
         <div
           className="absolute right-0 top-full mt-2 w-56 origin-top-right animate-fade-in rounded-xl border border-outline-variant/50 bg-surface p-2 shadow-medium"
-          role="menu"
+          id={panelId}
         >
           <div className="border-b border-outline-variant/50 px-3 py-3">
             <p className="font-body text-sm font-medium text-on-surface">{user?.name}</p>
@@ -63,7 +80,6 @@ export default function UserDropdown() {
           <Link
             href="/favoritos"
             className="flex items-center gap-3 rounded-lg px-3 py-2.5 font-body text-sm text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface"
-            role="menuitem"
             onClick={() => setOpen(false)}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -75,7 +91,6 @@ export default function UserDropdown() {
           <Link
             href="/mis-ordenes"
             className="flex items-center gap-3 rounded-lg px-3 py-2.5 font-body text-sm text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface"
-            role="menuitem"
             onClick={() => setOpen(false)}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -87,7 +102,6 @@ export default function UserDropdown() {
           <Link
             href="/perfil"
             className="flex items-center gap-3 rounded-lg px-3 py-2.5 font-body text-sm text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface"
-            role="menuitem"
             onClick={() => setOpen(false)}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -102,7 +116,6 @@ export default function UserDropdown() {
               <Link
                 href="/admin"
                 className="flex items-center gap-3 rounded-lg px-3 py-2.5 font-body text-sm text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface"
-                role="menuitem"
                 onClick={() => setOpen(false)}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -115,12 +128,12 @@ export default function UserDropdown() {
           )}
 
           <button
+            type="button"
             onClick={() => {
               logout();
               setOpen(false);
             }}
             className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 font-body text-sm text-error transition-colors hover:bg-red-50"
-            role="menuitem"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
