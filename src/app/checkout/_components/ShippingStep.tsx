@@ -71,14 +71,14 @@ export default function ShippingStep({
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
-      <h2 className="font-heading text-2xl font-medium text-on-surface">
+      <h2 className="font-heading text-2xl font-bold text-on-surface">
         Información de envío
       </h2>
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label
             htmlFor="s-name"
-            className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant"
+            className="mb-2 block font-body text-sm font-medium text-on-surface-variant"
           >
             Nombre completo *
           </label>
@@ -97,7 +97,7 @@ export default function ShippingStep({
         <div>
           <label
             htmlFor="s-email"
-            className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant"
+            className="mb-2 block font-body text-sm font-medium text-on-surface-variant"
           >
             Email *
           </label>
@@ -119,7 +119,7 @@ export default function ShippingStep({
         <div key={id}>
           <label
             htmlFor={id}
-            className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant"
+            className="mb-2 block font-body text-sm font-medium text-on-surface-variant"
           >
             {label}
           </label>
@@ -141,7 +141,7 @@ export default function ShippingStep({
         <div>
           <label
             htmlFor="s-city"
-            className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant"
+            className="mb-2 block font-body text-sm font-medium text-on-surface-variant"
           >
             Ciudad *
           </label>
@@ -160,7 +160,7 @@ export default function ShippingStep({
         <div>
           <label
             htmlFor="s-state"
-            className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant"
+            className="mb-2 block font-body text-sm font-medium text-on-surface-variant"
           >
             Departamento *
           </label>
@@ -179,7 +179,7 @@ export default function ShippingStep({
         <div>
           <label
             htmlFor="s-zip"
-            className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant"
+            className="mb-2 block font-body text-sm font-medium text-on-surface-variant"
           >
             Código Postal *
           </label>
@@ -201,7 +201,7 @@ export default function ShippingStep({
       <div>
         <label
           htmlFor="s-notes"
-          className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant"
+          className="mb-2 block font-body text-sm font-medium text-on-surface-variant"
         >
           Notas (opcional)
         </label>

@@ -55,7 +55,7 @@ export default function ProfileForm() {
 
   return (
     <section className="rounded-2xl border border-outline-variant/50 bg-surface p-6">
-      <h2 className="font-heading text-lg font-medium text-on-surface">
+      <h2 className="font-heading text-lg font-bold text-on-surface">
         Información personal
       </h2>
       <p className="mt-1 font-body text-sm text-on-surface-variant">

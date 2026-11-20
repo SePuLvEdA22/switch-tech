@@ -121,7 +121,7 @@ function OrderContent() {
       <div className="mx-auto max-w-lg">
         <div className="rounded-2xl bg-surface-container p-8 text-center animate-fade-in">
           <StatusIcon type={statusInfo.icon} />
-          <h1 className="font-heading text-3xl font-medium text-on-surface">
+          <h1 className="font-heading text-3xl font-bold text-on-surface">
             {statusInfo.title}
           </h1>
           <p className="mt-3 font-body text-base text-on-surface-variant">
@@ -131,17 +131,17 @@ function OrderContent() {
           {orderId && (
             <div className="mt-6 space-y-3">
               <div className="rounded-lg bg-surface-container-low p-4">
-                <p className="font-body text-xs font-medium uppercase tracking-wider text-on-surface-variant">
+                <p className="font-body text-xs font-medium text-on-surface-variant">
                   Número de orden
                 </p>
-                <p className="mt-1 font-heading text-lg font-medium text-primary break-all">
+                <p className="mt-1 font-heading text-lg font-bold text-primary break-all">
                   {orderId}
                 </p>
               </div>
 
               {paymentMethod && (
                 <div className="rounded-lg bg-surface-container-low p-4">
-                  <p className="font-body text-xs font-medium uppercase tracking-wider text-on-surface-variant">
+                  <p className="font-body text-xs font-medium text-on-surface-variant">
                     Método de pago
                   </p>
                   <p className="mt-1 font-body text-base text-on-surface">
@@ -152,10 +152,10 @@ function OrderContent() {
 
               {order && (
                 <div className="rounded-lg bg-surface-container-low p-4">
-                  <p className="font-body text-xs font-medium uppercase tracking-wider text-on-surface-variant">
+                  <p className="font-body text-xs font-medium text-on-surface-variant">
                     Total
                   </p>
-                  <p className="mt-1 font-heading text-lg font-medium text-primary">
+                  <p className="mt-1 font-heading text-lg font-bold text-primary">
                     {formatPrice(order.total)}
                   </p>
                 </div>
@@ -181,7 +181,7 @@ function OrderContent() {
 
         {status === 'failure' && (
           <div className="mt-6 rounded-xl border border-outline-variant/50 bg-surface-container-low p-5">
-            <h2 className="font-heading text-base font-medium text-on-surface">
+            <h2 className="font-heading text-base font-bold text-on-surface">
               ¿Problemas con tu pago?
             </h2>
             <ul className="mt-3 flex flex-col gap-2 font-body text-sm text-on-surface-variant">

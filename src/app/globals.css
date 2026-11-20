@@ -59,67 +59,73 @@
 }
 
 @theme static {
-  --color-surface: light-dark(#fbf9f8, #131314);
-  --color-surface-dim: light-dark(#dbd9d9, #131314);
-  --color-surface-bright: light-dark(#fbf9f8, #3a3a3a);
-  --color-surface-container-lowest: light-dark(#ffffff, #0e0e0e);
-  --color-surface-container-low: light-dark(#f5f3f3, #1b1c1c);
-  --color-surface-container: light-dark(#efeded, #1f1f1f);
-  --color-surface-container-high: light-dark(#eae8e7, #2a2a2a);
-  --color-surface-container-highest: light-dark(#e4e2e2, #353535);
-  --color-on-surface: light-dark(#1b1c1c, #e4e2e2);
-  --color-on-surface-variant: light-dark(#4f4443, #c4c4c4);
-  --color-inverse-surface: light-dark(#303030, #e4e2e2);
-  --color-inverse-on-surface: light-dark(#f2f0f0, #1b1c1c);
-  --color-outline: light-dark(#817473, #938f8f);
-  --color-outline-variant: light-dark(#d3c3c1, #444746);
-  --color-surface-tint: light-dark(#725856, #e0bfbc);
-  --color-primary: light-dark(#725856, #e0bfbc);
-  --color-primary-hover: light-dark(#634a48, #d0b0ad);
-  --color-on-primary: light-dark(#ffffff, #3d2b2a);
-  --color-primary-container: light-dark(#d9b8b5, #59413f);
-  --color-on-primary-container: light-dark(#604846, #d9b8b5);
-  --color-inverse-primary: light-dark(#e0bfbc, #725856);
-  --color-secondary: light-dark(#765a26, #e7c183);
-  --color-on-secondary: light-dark(#ffffff, #3e2b00);
-  --color-secondary-container: light-dark(#ffd797, #5c4210);
-  --color-on-secondary-container: light-dark(#795c28, #ffd797);
-  --color-tertiary: light-dark(#605e5a, #cac6c1);
-  --color-on-tertiary: light-dark(#ffffff, #32302e);
-  --color-tertiary-container: light-dark(#c3bfba, #484643);
-  --color-on-tertiary-container: light-dark(#504e4a, #c3bfba);
-  --color-error: light-dark(#ba1a1a, #ffb4ab);
-  --color-on-error: light-dark(#ffffff, #690005);
-  --color-error-container: light-dark(#ffdad6, #93000a);
-  --color-on-error-container: light-dark(#93000a, #ffdad6);
+  /* Paleta «el switch»: porcelana, petróleo, tinta y un solo acento ámbar.
+     light-dark(claro, oscuro): un token, dos esquemas. */
+  --color-surface: light-dark(#EDF0EF, #0E1615);
+  --color-surface-dim: light-dark(#DCE3E1, #0B1211);
+  --color-surface-bright: light-dark(#F6F8F7, #1E2927);
+  --color-surface-container-lowest: light-dark(#FFFFFF, #17211F);
+  --color-surface-container-low: light-dark(#F6F8F7, #131C1A);
+  --color-surface-container: light-dark(#E4EAE8, #1B2523);
+  --color-surface-container-high: light-dark(#DAE1DF, #222D2B);
+  --color-surface-container-highest: light-dark(#CFD8D6, #2A3634);
+  --color-on-surface: light-dark(#142322, #E6ECEA);
+  --color-on-surface-variant: light-dark(#4B5856, #A3B1AE);
+  --color-inverse-surface: light-dark(#142322, #E6ECEA);
+  --color-inverse-on-surface: light-dark(#EDF0EF, #142322);
+  --color-outline: light-dark(#6B7876, #7F8C89);
+  --color-outline-variant: light-dark(#D5DCDA, #2C3836);
+  --color-surface-tint: light-dark(#0F4C4A, #5FB3AE);
+  --color-primary: light-dark(#0F4C4A, #5FB3AE);
+  --color-primary-hover: light-dark(#0B3B39, #7CC4BF);
+  --color-on-primary: light-dark(#FFFFFF, #0E1615);
+  --color-primary-container: light-dark(#E3ECEA, #17302E);
+  --color-on-primary-container: light-dark(#0F4C4A, #BFE0DC);
+  --color-inverse-primary: light-dark(#5FB3AE, #0F4C4A);
+  /* Ámbar «carga»: solo para la perilla del switch, el logo y destacados puntuales. */
+  --color-accent: #F5B400;
+  --color-on-accent: #142322;
+  --color-secondary: #F5B400;
+  --color-on-secondary: #142322;
+  --color-secondary-container: light-dark(#FFF1C7, #3A2E05);
+  --color-on-secondary-container: light-dark(#5A4300, #FFE08A);
+  --color-tertiary: light-dark(#4B5856, #A3B1AE);
+  --color-on-tertiary: light-dark(#FFFFFF, #0E1615);
+  --color-tertiary-container: light-dark(#E3ECEA, #1B2523);
+  --color-on-tertiary-container: light-dark(#0F4C4A, #BFE0DC);
+  --color-error: light-dark(#B3261E, #FFB4AB);
+  --color-on-error: light-dark(#FFFFFF, #690005);
+  --color-error-container: light-dark(#FFDAD6, #93000A);
+  --color-on-error-container: light-dark(#410E0B, #FFDAD6);
   /* Los "fixed" son iguales en ambos esquemas por definición. */
-  --color-primary-fixed: #fedad7;
-  --color-primary-fixed-dim: #e0bfbc;
-  --color-on-primary-fixed: #291715;
-  --color-on-primary-fixed-variant: #59413f;
-  --color-secondary-fixed: #ffdeab;
-  --color-secondary-fixed-dim: #e7c183;
-  --color-on-secondary-fixed: #271900;
-  --color-on-secondary-fixed-variant: #5c4210;
-  --color-tertiary-fixed: #e6e2dd;
-  --color-tertiary-fixed-dim: #cac6c1;
-  --color-on-tertiary-fixed: #1d1b19;
-  --color-on-tertiary-fixed-variant: #484643;
-  --color-bg: light-dark(#fbf9f8, #131314);
-  --color-on-background: light-dark(#1b1c1c, #e4e2e2);
-  --color-surface-variant: light-dark(#e4e2e2, #444746);
+  --color-primary-fixed: #CFE7E4;
+  --color-primary-fixed-dim: #9FCFCA;
+  --color-on-primary-fixed: #002020;
+  --color-on-primary-fixed-variant: #0F4C4A;
+  --color-secondary-fixed: #FFE08A;
+  --color-secondary-fixed-dim: #F5B400;
+  --color-on-secondary-fixed: #251A00;
+  --color-on-secondary-fixed-variant: #5A4300;
+  --color-tertiary-fixed: #E3ECEA;
+  --color-tertiary-fixed-dim: #C7D2D0;
+  --color-on-tertiary-fixed: #142322;
+  --color-on-tertiary-fixed-variant: #4B5856;
+  --color-bg: light-dark(#EDF0EF, #0E1615);
+  --color-on-background: light-dark(#142322, #E6ECEA);
+  --color-surface-variant: light-dark(#DAE1DF, #2A3634);
 
-  --shadow-soft: 0 10px 30px light-dark(rgba(74, 74, 74, 0.05), rgba(0, 0, 0, 0.3));
-  --shadow-medium: 0 20px 40px light-dark(rgba(74, 74, 74, 0.08), rgba(0, 0, 0, 0.4));
+  --shadow-soft: 0 1px 2px light-dark(rgba(20, 35, 34, 0.06), rgba(0, 0, 0, 0.3)), 0 8px 24px light-dark(rgba(20, 35, 34, 0.06), rgba(0, 0, 0, 0.3));
+  --shadow-medium: 0 2px 4px light-dark(rgba(20, 35, 34, 0.06), rgba(0, 0, 0, 0.35)), 0 18px 40px light-dark(rgba(20, 35, 34, 0.1), rgba(0, 0, 0, 0.45));
 }
 
 @theme inline {
-  --font-heading: "Playfair Display", serif;
-  --font-body: "DM Sans", sans-serif;
+  /* Variables que define next/font en <html> (layout.tsx). */
+  --font-heading: var(--font-bricolage), system-ui, sans-serif;
+  --font-body: var(--font-instrument), system-ui, sans-serif;
 
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
   --radius-xl: 1rem;
 }
 
@@ -128,8 +134,8 @@
  * se ramifican con la media query + el override del <meta>.
  */
 :root {
-  --select-arrow: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23725456' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-  --select-arrow-dark: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e0bfbc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  --select-arrow: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F4C4A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  --select-arrow-dark: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235FB3AE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
 }
 
 @media (prefers-color-scheme: dark) {
@@ -175,9 +181,13 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Títulos: Bricolage condensada y apretada. Los que usan la clase
+     font-heading heredan lo mismo (ver .font-heading en components). */
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
-    font-weight: 500;
+    font-weight: 700;
+    font-stretch: 84%;
+    letter-spacing: -0.02em;
   }
 
   :focus-visible {
@@ -347,40 +357,32 @@
     }
   }
 
-  /*
-   * Acciones flotantes de la tarjeta (agregar, favorito). Solo se ocultan
-   * hasta el hover en dispositivos con puntero fino que SÍ pueden hacer hover;
-   * en táctiles siempre están visibles. Con teclado aparecen al enfocar.
-   */
-  @media (hover: hover) and (pointer: fine) {
-    .card-action {
-      opacity: 0;
-    }
-
-    .group:is(:hover, :focus-within) .card-action,
-    .card-action[aria-pressed="true"] {
-      opacity: 1;
-    }
+  .font-heading {
+    font-stretch: 84%;
+    letter-spacing: -0.02em;
   }
 
+  /* Botones en píldora, minúscula inicial (sin mayúsculas espaciadas). */
   .btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 12px 24px;
+    min-height: 48px;
+    padding: 0 24px;
     background-color: var(--color-primary);
     color: var(--color-on-primary);
-    border-radius: var(--radius-md);
+    border-radius: 9999px;
     font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.2;
     transition: background-color 0.2s ease;
     cursor: pointer;
     border: none;
+    text-decoration: none;
   }
+
 
   .btn-primary:hover {
     background-color: var(--color-primary-hover);
@@ -396,23 +398,24 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 12px 24px;
+    min-height: 48px;
+    padding: 0 24px;
     background-color: transparent;
-    color: var(--color-on-surface);
-    border: 1px solid var(--color-primary);
-    border-radius: var(--radius-md);
+    color: var(--color-primary);
+    border: 1.5px solid var(--color-primary);
+    border-radius: 9999px;
     font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    transition: all 0.2s ease;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.2;
+    transition: background-color 0.2s ease, color 0.2s ease;
     cursor: pointer;
+    text-decoration: none;
   }
+
 
   .btn-secondary:hover {
     background-color: var(--color-primary-container);
-    border-color: var(--color-primary-container);
   }
 
   .btn-danger {
@@ -444,7 +447,7 @@
   .input-field {
     width: 100%;
     padding: 12px 16px;
-    background-color: var(--color-surface-container-low);
+    background-color: var(--color-surface-container-lowest);
     border: 1px solid var(--color-outline-variant);
     border-radius: var(--radius-md);
     font-family: var(--font-body);
@@ -453,6 +456,7 @@
     transition: border-color 0.2s ease;
     outline: none;
   }
+
 
   .input-field:focus {
     border-color: var(--color-primary);
@@ -468,20 +472,22 @@
     }
   }
 
+  /* Chip de especificación (20W, USB-C, 500 ml…). */
   .chip {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 12px;
-    background-color: var(--color-tertiary-container);
-    color: var(--color-on-tertiary-container);
+    padding: 6px 10px;
+    background-color: var(--color-primary-container);
+    color: var(--color-on-primary-container);
     border-radius: 9999px;
     font-family: var(--font-body);
     font-size: 12px;
-    font-weight: 500;
-    line-height: 1.4;
+    font-weight: 600;
+    line-height: 1;
     white-space: nowrap;
   }
+
 
   /* Flecha personalizada para <select> (el resto usa .input-field). */
   select.input-field {

@@ -52,7 +52,7 @@ export default function CheckoutPage() {
   if (!hydrated) {
     return (
       <div className="container-store py-12">
-        <h1 className="mb-6 font-heading text-4xl font-medium text-on-surface md:text-5xl">
+        <h1 className="mb-6 font-heading text-4xl font-bold text-on-surface md:text-5xl">
           Finalizar compra
         </h1>
         <CheckoutStepper step={step} />
@@ -65,11 +65,11 @@ export default function CheckoutPage() {
     return (
       <div className="container-store py-12">
         <div className="mx-auto max-w-lg rounded-2xl bg-surface-container p-8 text-center">
-          <h1 className="font-heading text-2xl font-medium text-on-surface">Carrito vacío</h1>
+          <h1 className="font-heading text-2xl font-bold text-on-surface">Carrito vacío</h1>
           <p className="mt-2 font-body text-base text-on-surface-variant">
             Agrega productos al carrito antes de continuar.
           </p>
-          <Link href="/fundas" className="btn-primary mt-6 inline-block">
+          <Link href="/fundas" className="btn-primary mt-6">
             Ver productos
           </Link>
         </div>
@@ -192,7 +192,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="container-store py-12 animate-fade-in">
-      <h1 className="mb-6 font-heading text-4xl font-medium text-on-surface md:text-5xl">
+      <h1 className="mb-6 font-heading text-4xl font-bold text-on-surface md:text-5xl">
         Finalizar compra
       </h1>
       <CheckoutStepper step={step} />

@@ -39,7 +39,7 @@ export default function DeleteAccountSection() {
 
   return (
     <section className="rounded-2xl border border-error/30 bg-error/5 p-6">
-      <h2 className="font-heading text-lg font-medium text-on-surface">
+      <h2 className="font-heading text-lg font-bold text-on-surface">
         Eliminar mi cuenta
       </h2>
       <p className="mt-1 font-body text-sm text-on-surface-variant">

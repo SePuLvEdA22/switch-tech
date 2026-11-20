@@ -61,7 +61,7 @@ export default function IniciarSesionPage() {
   return (
     <div className="container-store flex flex-1 items-center justify-center py-12">
       <div className="w-full max-w-md animate-fade-in">
-        <h1 className="font-heading text-3xl font-medium text-on-surface md:text-4xl text-center">
+        <h1 className="font-heading text-3xl font-bold text-on-surface md:text-4xl text-center">
           Iniciar sesión
         </h1>
         <p className="mt-2 text-center font-body text-base text-on-surface-variant">
@@ -70,7 +70,7 @@ export default function IniciarSesionPage() {
 
         <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-5" noValidate>
           <div>
-            <label htmlFor="email" className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant">
+            <label htmlFor="email" className="mb-2 block font-body text-sm font-medium text-on-surface-variant">
               Email
             </label>
             <input
@@ -83,7 +83,7 @@ export default function IniciarSesionPage() {
             {errors.email && <p className="mt-1 font-body text-xs text-error" role="alert">{errors.email}</p>}
           </div>
           <div>
-            <label htmlFor="password" className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant">
+            <label htmlFor="password" className="mb-2 block font-body text-sm font-medium text-on-surface-variant">
               Contraseña
             </label>
             <input

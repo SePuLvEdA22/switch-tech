@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function TerminosPage() {
   return (
     <div className="container-store py-12 animate-fade-in">
-      <h1 className="font-heading text-4xl font-medium text-on-surface md:text-5xl">
+      <h1 className="font-heading text-4xl font-bold text-on-surface md:text-5xl">
         Términos y Condiciones
       </h1>
       <p className="mt-3 font-body text-sm text-on-surface-variant">
@@ -20,7 +20,7 @@ export default function TerminosPage() {
 
       <div className="mt-10 flex max-w-3xl flex-col gap-8 font-body text-base leading-relaxed text-on-surface-variant">
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             1. Aceptación de los términos
           </h2>
           <p>
@@ -31,7 +31,7 @@ export default function TerminosPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             2. Productos y precios
           </h2>
           <ul className="flex flex-col gap-2 pl-5 list-disc">
@@ -43,7 +43,7 @@ export default function TerminosPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             3. Proceso de compra
           </h2>
           <ol className="flex flex-col gap-2 pl-5 list-decimal">
@@ -56,7 +56,7 @@ export default function TerminosPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             4. Pagos
           </h2>
           <p>
@@ -77,7 +77,7 @@ export default function TerminosPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             5. Envíos
           </h2>
           <p>
@@ -92,7 +92,7 @@ export default function TerminosPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             6. Devoluciones y cambios
           </h2>
           <p>
@@ -110,7 +110,7 @@ export default function TerminosPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             7. Propiedad intelectual
           </h2>
           <p>
@@ -121,7 +121,7 @@ export default function TerminosPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             8. Limitación de responsabilidad
           </h2>
           <p>
@@ -132,7 +132,7 @@ export default function TerminosPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             9. Ley aplicable
           </h2>
           <p>
@@ -143,7 +143,7 @@ export default function TerminosPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-on-surface">
             10. Contacto
           </h2>
           <p>

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, DM_Sans } from "next/font/google";
+import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
 import dynamic from "next/dynamic";
 import "./globals.css";
 import SiteShell from "@/components/SiteShell";
@@ -11,41 +11,43 @@ import { COLOR_SCHEME_SCRIPT } from "@/lib/color-scheme";
 
 const CartDrawer = dynamic(() => import("@/components/CartDrawer"));
 
-const playfairDisplay = Playfair_Display({
+// Títulos: Bricolage Grotesque condensada (eje wdth). Texto: Instrument Sans.
+// Fuentes variables: un solo archivo por familia con todos los pesos.
+const headingFont = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-heading",
+  axes: ["wdth"],
+  variable: "--font-bricolage",
 });
 
-const dmSans = DM_Sans({
+const bodyFont = Instrument_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-body",
+  axes: ["wdth"],
+  variable: "--font-instrument",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://switchandtech.com"),
   title: {
-    default: "Switch&Tech — Accesorios elegantes",
+    default: "Switch&Tech — Cargadores, fundas y termos",
     template: "%s | Switch&Tech",
   },
   description:
-    "Descubre nuestra colección de fundas, cargadores, termos y accesorios personalizados. Calidad y diseño que inspiran.",
+    "Cargadores, cables, fundas, termos y accesorios personalizados con envío a toda Colombia. Paga con PSE o tarjeta.",
   keywords: ["fundas", "cargadores", "termos", "accesorios", "personalizados", "tecnología", "Switch&Tech"],
   authors: [{ name: "Switch&Tech" }],
   openGraph: {
     type: "website",
-    locale: "es_MX",
+    locale: "es_CO",
     siteName: "Switch&Tech",
-    title: "Switch&Tech — Accesorios elegantes",
+    title: "Switch&Tech — Cargadores, fundas y termos",
     description:
-      "Descubre nuestra colección de fundas, cargadores, termos y accesorios personalizados. Calidad y diseño que inspiran.",
+      "Cargadores, cables, fundas, termos y accesorios personalizados con envío a toda Colombia. Paga con PSE o tarjeta.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Switch&Tech — Accesorios elegantes",
+    title: "Switch&Tech — Cargadores, fundas y termos",
     description:
-      "Descubre nuestra colección de fundas, cargadores, termos y accesorios personalizados.",
+      "Cargadores, cables, fundas, termos y accesorios personalizados con envío a toda Colombia.",
   },
   robots: {
     index: true,
@@ -57,7 +59,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#725856",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#EDF0EF" },
+    { media: "(prefers-color-scheme: dark)", color: "#0E1615" },
+  ],
 };
 
 export default function RootLayout({
@@ -69,7 +74,7 @@ export default function RootLayout({
     <html
       lang="es"
       data-scroll-behavior="smooth"
-      className={`${playfairDisplay.variable} ${dmSans.variable}`}
+      className={`${headingFont.variable} ${bodyFont.variable}`}
     >
       <head>
         {/*

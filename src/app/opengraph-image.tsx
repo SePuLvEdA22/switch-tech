@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 
 export const runtime = 'nodejs';
 
-export const alt = 'Switch&Tech — Accesorios elegantes';
+export const alt = 'Switch&Tech — Cargadores, fundas y termos';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -13,20 +13,20 @@ export default function Image() {
         style={{
           width: 1200,
           height: 630,
-          background: '#faf7f5',
+          background: '#EDF0EF',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          fontFamily: 'serif',
+          fontFamily: 'sans-serif',
         }}
       >
         <div
           style={{
             fontSize: 80,
             fontWeight: 700,
-            letterSpacing: '-0.02em',
-            color: '#3d2c2a',
+            letterSpacing: '-0.03em',
+            color: '#142322',
           }}
         >
           Switch&Tech
@@ -35,11 +35,11 @@ export default function Image() {
           style={{
             fontSize: 28,
             marginTop: 16,
-            color: '#725856',
+            color: '#4B5856',
             fontWeight: 400,
           }}
         >
-          Accesorios tecnológicos con estilo
+          Cargadores, fundas y termos con envío a toda Colombia
         </div>
         <div
           style={{
@@ -55,8 +55,8 @@ export default function Image() {
                 style={{
                   padding: '8px 24px',
                   borderRadius: 999,
-                  background: '#e8dfdc',
-                  color: '#3d2c2a',
+                  background: '#0F4C4A',
+                  color: '#FFFFFF',
                   fontSize: 18,
                 }}
               >

@@ -46,7 +46,7 @@ export default function OrderSummary({
 }: OrderSummaryProps) {
   return (
     <div className="rounded-2xl bg-surface-container p-6">
-      <h2 className="font-heading text-xl font-medium text-on-surface">
+      <h2 className="font-heading text-xl font-bold text-on-surface">
         Resumen del pedido
       </h2>
       <div className="mt-4 flex flex-col gap-3">
@@ -68,7 +68,7 @@ export default function OrderSummary({
       <div className="mt-4 border-t border-outline-variant/50 pt-3">
         {/* Cupón de descuento */}
         <div className="mb-4">
-          <label htmlFor="coupon-code" className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant">
+          <label htmlFor="coupon-code" className="mb-2 block font-body text-sm font-medium text-on-surface-variant">
             Cupón de descuento
           </label>
           {coupon ? (
@@ -130,7 +130,7 @@ export default function OrderSummary({
         </div>
         <div className="mt-3 border-t border-outline-variant/50 pt-3 flex justify-between">
           <span className="font-body text-base font-medium text-on-surface">Total</span>
-          <span className="font-heading text-xl font-medium text-primary">
+          <span className="font-heading text-xl font-bold text-primary">
             {payableTotal === null ? '—' : formatPrice(payableTotal)}
           </span>
         </div>

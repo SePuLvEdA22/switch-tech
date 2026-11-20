@@ -45,7 +45,7 @@ export default function PaymentStep({
 }: PaymentStepProps) {
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="font-heading text-2xl font-medium text-on-surface">
+      <h2 className="font-heading text-2xl font-bold text-on-surface">
         Método de pago
       </h2>
 
@@ -91,14 +91,14 @@ export default function PaymentStep({
       {/* Formulario PSE: identificación */}
       {paymentMethod === 'pse' && (
         <div className="rounded-xl bg-surface-container p-5">
-          <h3 className="mb-4 font-heading text-lg font-medium text-on-surface">
+          <h3 className="mb-4 font-heading text-lg font-bold text-on-surface">
             Identificación del pagador (Colombia)
           </h3>
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
               <label
                 htmlFor="doc-type"
-                className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant"
+                className="mb-2 block font-body text-sm font-medium text-on-surface-variant"
               >
                 Tipo de documento *
               </label>
@@ -119,7 +119,7 @@ export default function PaymentStep({
             <div>
               <label
                 htmlFor="doc-number"
-                className="mb-2 block font-body text-sm font-medium uppercase tracking-wider text-on-surface-variant"
+                className="mb-2 block font-body text-sm font-medium text-on-surface-variant"
               >
                 Número de documento *
               </label>
@@ -155,7 +155,7 @@ export default function PaymentStep({
       {/* Legacy: formulario de tarjeta (solo en test mode sin MP SDK) */}
       {paymentMethod === 'card' && (
         <div className="rounded-xl bg-surface-container p-5">
-          <h3 className="mb-4 font-heading text-lg font-medium text-on-surface">
+          <h3 className="mb-4 font-heading text-lg font-bold text-on-surface">
             Información de tarjeta
           </h3>
           <p className="mb-4 font-body text-sm text-on-surface-variant">

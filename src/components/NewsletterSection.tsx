@@ -41,7 +41,7 @@ export default function NewsletterSection() {
 
   return (
     <section className="section-gap rounded-2xl bg-surface-container-high px-6 py-16 text-center md:py-20 animate-fade-in-up">
-      <h2 className="font-heading text-3xl font-medium text-on-surface md:text-4xl">
+      <h2 className="font-heading text-3xl font-bold text-on-surface md:text-4xl">
         Mantente al día
       </h2>
       <p className="mx-auto mt-3 max-w-md font-body text-base leading-relaxed text-on-surface-variant">

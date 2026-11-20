@@ -60,7 +60,7 @@ export default function MisOrdenesPage() {
   if (authLoading || orders === null) {
     return (
       <div className="container-store py-12 animate-fade-in">
-        <h1 className="font-heading text-3xl font-medium text-on-surface">Mis órdenes</h1>
+        <h1 className="font-heading text-3xl font-bold text-on-surface">Mis órdenes</h1>
         <div className="mt-8 flex flex-col gap-4">
           {[1, 2, 3].map(i => (
             <div key={i} className="h-32 rounded-xl bg-surface-container-high animate-pulse" />
@@ -74,11 +74,11 @@ export default function MisOrdenesPage() {
     return (
       <div className="container-store py-12 animate-fade-in">
         <div className="mx-auto max-w-lg rounded-2xl bg-surface-container p-8 text-center">
-          <h1 className="font-heading text-2xl font-medium text-on-surface">Inicia sesión</h1>
+          <h1 className="font-heading text-2xl font-bold text-on-surface">Inicia sesión</h1>
           <p className="mt-2 font-body text-base text-on-surface-variant">
             Necesitas iniciar sesión para ver tus órdenes.
           </p>
-          <Link href="/iniciar-sesion" className="btn-primary mt-6 inline-block">
+          <Link href="/iniciar-sesion" className="btn-primary mt-6">
             Iniciar sesión
           </Link>
         </div>
@@ -88,14 +88,14 @@ export default function MisOrdenesPage() {
 
   return (
     <div className="container-store py-12 animate-fade-in">
-      <h1 className="font-heading text-3xl font-medium text-on-surface">Mis órdenes</h1>
+      <h1 className="font-heading text-3xl font-bold text-on-surface">Mis órdenes</h1>
 
       {orders.length === 0 ? (
         <div className="mt-8 rounded-2xl bg-surface-container p-8 text-center">
           <p className="font-body text-base text-on-surface-variant">
             No tienes órdenes aún.
           </p>
-          <Link href="/fundas" className="btn-primary mt-4 inline-block">
+          <Link href="/fundas" className="btn-primary mt-4">
             Ver productos
           </Link>
         </div>
@@ -109,10 +109,10 @@ export default function MisOrdenesPage() {
             >
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <p className="font-body text-xs uppercase tracking-wider text-on-surface-variant">
+                  <p className="font-body text-xs text-on-surface-variant">
                     Orden
                   </p>
-                  <p className="font-heading text-sm font-medium text-on-surface">{order.id}</p>
+                  <p className="font-heading text-sm font-bold text-on-surface">{order.id}</p>
                 </div>
                 <span className={`rounded-full px-3 py-1 font-body text-xs font-medium ${statusColors[order.status] || 'bg-gray-100 text-gray-800'}`}>
                   {statusLabels[order.status] || order.status}

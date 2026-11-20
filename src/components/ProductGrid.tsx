@@ -10,7 +10,7 @@ export default function ProductGrid({ products, title }: ProductGridProps) {
   return (
     <section className="section-gap">
       {title && (
-        <h2 className="mb-8 font-heading text-3xl font-medium text-on-surface md:text-4xl">
+        <h2 className="mb-8 font-heading text-3xl font-bold text-on-surface md:text-4xl">
           {title}
         </h2>
       )}

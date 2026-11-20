@@ -32,7 +32,7 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
         // Elegir un color es una opción única: grupo de radios nativos con
         // aspecto de botón (antes eran botones sin estado accesible).
         <fieldset className="mt-8">
-          <legend className="mb-3 font-body text-xs font-medium uppercase tracking-wider text-on-surface-variant">
+          <legend className="mb-3 font-body text-xs font-medium text-on-surface-variant">
             Color: <span className="text-on-surface">{selectedColor || product.colors[0]}</span>
           </legend>
           <div className="flex flex-wrap gap-2">

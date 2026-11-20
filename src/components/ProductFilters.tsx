@@ -32,7 +32,7 @@ export default function ProductFilters({ products, title }: ProductFiltersProps)
     return (
       <section className="section-gap">
         {title && (
-          <h2 className="mb-8 font-heading text-3xl font-medium text-on-surface md:text-4xl">
+          <h2 className="mb-8 font-heading text-3xl font-bold text-on-surface md:text-4xl">
             {title}
           </h2>
         )}
@@ -49,7 +49,7 @@ export default function ProductFilters({ products, title }: ProductFiltersProps)
     <section className="section-gap">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         {title && (
-          <h2 className="font-heading text-3xl font-medium text-on-surface md:text-4xl">
+          <h2 className="font-heading text-3xl font-bold text-on-surface md:text-4xl">
             {title}
           </h2>
         )}

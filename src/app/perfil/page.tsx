@@ -66,7 +66,7 @@ export default function PerfilPage() {
               .slice(0, 2) || '?'}
           </div>
           <div>
-            <h1 className="font-heading text-2xl font-medium text-on-surface">
+            <h1 className="font-heading text-2xl font-bold text-on-surface">
               {user.name}
             </h1>
             <p className="font-body text-sm text-on-surface-variant">{user.email}</p>
@@ -82,7 +82,7 @@ export default function PerfilPage() {
 
           {/* ─── CERRAR SESIÓN ─── */}
           <section className="rounded-2xl border border-outline-variant/50 bg-surface p-6">
-            <h2 className="font-heading text-lg font-medium text-on-surface">
+            <h2 className="font-heading text-lg font-bold text-on-surface">
               Sesión
             </h2>
             <p className="mt-1 font-body text-sm text-on-surface-variant">

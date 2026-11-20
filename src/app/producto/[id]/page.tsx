@@ -49,12 +49,12 @@ export default async function ProductDetailPage({ params }: Props) {
         <ProductGallery product={product} />
 
         <div className="flex flex-col justify-center">
-          <h1 className="font-heading text-4xl font-medium text-on-surface md:text-5xl">
+          <h1 className="font-heading text-4xl font-bold text-on-surface md:text-5xl">
             {product.name}
           </h1>
           <PriceTag
             product={product}
-            className="mt-6 font-heading text-3xl font-medium"
+            className="mt-6 font-heading text-3xl font-bold"
             priceClassName="text-primary"
           />
           <p className="mt-6 font-body text-base leading-relaxed text-on-surface-variant">
@@ -67,7 +67,7 @@ export default async function ProductDetailPage({ params }: Props) {
 
       {related.length > 0 && (
         <section className="mt-20">
-          <h2 className="mb-8 font-heading text-2xl font-medium text-on-surface">
+          <h2 className="mb-8 font-heading text-2xl font-bold text-on-surface">
             Productos relacionados
           </h2>
           <div className="product-grid">

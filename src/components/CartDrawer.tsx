@@ -54,7 +54,7 @@ export default function CartDrawer() {
       onClick={handleBackdropClick}
     >
         <div className="flex items-center justify-between border-b border-outline-variant px-6 py-4">
-          <h2 id="cart-drawer-title" className="font-heading text-xl font-medium">Carrito</h2>
+          <h2 id="cart-drawer-title" className="font-heading text-xl font-bold">Carrito</h2>
           <button
             onClick={toggleCart}
             className="p-2 transition-colors hover:text-primary"
@@ -149,7 +149,7 @@ export default function CartDrawer() {
             <div className="border-t border-outline-variant px-6 py-4">
               <div className="mb-4 flex items-center justify-between">
                 <span className="font-body text-base text-on-surface">Total</span>
-                <span className="font-heading text-xl font-medium text-primary">
+                <span className="font-heading text-xl font-bold text-primary">
                   {formatPrice(totalPrice)}
                 </span>
               </div>

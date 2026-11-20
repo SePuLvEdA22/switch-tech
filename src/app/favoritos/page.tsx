@@ -67,7 +67,7 @@ export default function FavoritosPage() {
 
   return (
     <div className="container-store py-12 animate-fade-in">
-      <h1 className="mb-2 font-heading text-4xl font-medium text-on-surface md:text-5xl">Favoritos</h1>
+      <h1 className="mb-2 font-heading text-4xl font-bold text-on-surface md:text-5xl">Favoritos</h1>
       <p className="mb-10 font-body text-base text-on-surface-variant">
         Tus productos favoritos, guardados en este navegador.
       </p>
@@ -83,7 +83,7 @@ export default function FavoritosPage() {
           <p className="mt-1 font-body text-sm text-on-surface-variant">
             Toca el corazón de cualquier producto para guardarlo aquí.
           </p>
-          <Link href="/fundas" className="btn-primary mt-6 inline-block">
+          <Link href="/fundas" className="btn-primary mt-6">
             Explorar productos
           </Link>
         </div>
