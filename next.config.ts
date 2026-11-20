@@ -31,6 +31,12 @@ const nextConfig: NextConfig = {
     root: process.cwd(),
   },
 
+  // Solo afecta a `next dev`: permite abrir el servidor de desarrollo desde
+  // la IP de la red local (p. ej. probar en el celular). Sin esto Next
+  // responde 403 a los chunks de JS, la página no se hidrata y ningún botón
+  // funciona. Comodín por segmento para que no dependa de la IP asignada.
+  allowedDevOrigins: ["192.168.*.*"],
+
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
